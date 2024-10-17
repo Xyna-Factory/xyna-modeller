@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,16 +33,14 @@ import { AppRoutingModules, AppRoutingProviders } from './app.routing';
     declarations: [
         AppComponent
     ],
-    imports: [
-        BrowserModule,
+    imports: [BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule,
         ZetaModule,
-        ...AppRoutingModules
-    ],
+        ...AppRoutingModules],
     providers: [
         ...AppRoutingProviders,
-        Title
+        Title,
+        provideHttpClient(withInterceptorsFromDi())
     ]
 })
 export class AppModule {
