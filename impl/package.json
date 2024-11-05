@@ -11,8 +11,7 @@
     "release": "ng build xyna --configuration=production --extract-licenses",
     "lint": "eslint --color ./projects/xyna/src/app",
     "lint:fix": "npm run lint -- --fix",
-    "tsc": "tsc",
-    "extract-i18n": "ng xi18n xyna --i18n-format xlf --output-path ./locale --i18n-locale en-US && ng run xyna:xliffmerge"
+    "tsc": "tsc"
   },
   "dependencies": {
     "@angular/animations": "18.2.8",

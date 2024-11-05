@@ -27,7 +27,7 @@ import { RuntimeContext } from '@zeta/api/xo/xo-describer';
 export const environment: ZetaEnvironment = {
     production: false,
     zeta: {
-        url: 'https://host-ip-address:host-port/modeller-api/',
+        url: 'https://10.0.10.191/modeller-api/',
         xo: {
             runtimeContext: RuntimeContext.fromApplication('GuiHttp'),
             consistencyCheck: false
