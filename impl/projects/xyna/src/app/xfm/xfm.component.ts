@@ -48,7 +48,8 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 
 @Component({
     templateUrl: './xfm.component.html',
-    styleUrls: ['./xfm.component.scss']
+    styleUrls: ['./xfm.component.scss'],
+    standalone: false
 })
 export class XfmComponent implements OnInit {
 

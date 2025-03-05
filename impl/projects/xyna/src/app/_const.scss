@@ -15,16 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-// $theme: customtheme;
 
-@import 'zeta/const';
-// @import 'customtheme';
+@forward "zeta/theme";
+@use "zeta/theme" as *;
 
-
-@import 'xfm/processmodeller/const';
-@import 'xfm/processmonitor/const';
-@import 'xfm/factorymanager/const';
-
+// @forward "zeta/const";
+// @use "zeta/const" as const;
 
 /****************************************************
  * Overridden Zeta Styles
@@ -40,8 +36,14 @@ $xc-button-border-radius: 4px;
 
 
 /****************************************************
- * XFM Variables
- ****************************************************/
+  * XFM Variables
+  ****************************************************/
+
+$navigation-highlight-color-processmodeller: $color-invert;
+$navigation-highlight-color-factorymanager: $color-invert;
+$navigation-highlight-color-processmonitor: $color-invert;
+$navigation-highlight-color-testfactory: $color-invert;
+$navigation-highlight-color-acm: $color-invert;
 
 @if $theme == xyna {
     $navigation-highlight-color-processmodeller: #f10870;
@@ -49,10 +51,4 @@ $xc-button-border-radius: 4px;
     $navigation-highlight-color-processmonitor: #5de700;
     $navigation-highlight-color-testfactory: #e5fcff;
     $navigation-highlight-color-acm: #8f0088;
-} @else {
-    $navigation-highlight-color-processmodeller: $color-black;
-    $navigation-highlight-color-factorymanager: $color-black;
-    $navigation-highlight-color-processmonitor: $color-black;
-    $navigation-highlight-color-testfactory: $color-black;
-    $navigation-highlight-color-acm: $color-black;
 }

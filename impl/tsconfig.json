@@ -10,12 +10,14 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
-        "target": "ES2022",
+        "target": "ES2024",
+        "module": "ESNext",
+        "useDefineForClassFields": false,
         "typeRoots": [
             "node_modules/@types"
         ],
         "lib": [
-            "es2019",
+            "es2024",
             "dom"
         ],
         "paths": {
@@ -34,8 +36,7 @@
             "@environments/*": [
                 "projects/xyna/src/environments/*"
             ]
-        },
-        "useDefineForClassFields": false
+        }
     },
     "angularCompilerOptions": {
         "preserveWhitespaces": false

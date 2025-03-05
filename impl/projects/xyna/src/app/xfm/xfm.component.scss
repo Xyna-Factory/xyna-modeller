@@ -15,13 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-$navigation-highlight-color-processmodeller: unset !default;
-$navigation-highlight-color-factorymanager: unset !default;
-$navigation-highlight-color-processmonitor: unset !default;
-$navigation-highlight-color-testfactory: unset !default;
-$navigation-highlight-color-acm: unset !default;
 
-@import 'const';
+@use '../const' as *;
 
 
 :host {

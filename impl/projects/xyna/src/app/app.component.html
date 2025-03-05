@@ -1,11 +1,13 @@
 <xc-menu
-    [xc-menu-items]="menuService.items"
-    [xc-menu-with-arrow]="menuService.options.withArrow"
-    [xc-menu-x-nextto-trigger]="menuService.options.xNexttoTrigger"
-    [xc-menu-y-nextto-trigger]="menuService.options.yNexttoTrigger"
-    [xc-menu-x-offset]="menuService.options.xOffset"
-    [xc-menu-y-offset]="menuService.options.yOffset"
-    [xc-menu-x-position]="menuService.options.xPosition"
-    [xc-menu-y-position]="menuService.options.yPosition"
+  [xc-menu-items]="menuService.items"
+  [xc-menu-with-arrow]="menuService.options.withArrow"
+  [xc-menu-x-nextto-trigger]="menuService.options.xNexttoTrigger"
+  [xc-menu-y-nextto-trigger]="menuService.options.yNexttoTrigger"
+  [xc-menu-x-offset]="menuService.options.xOffset"
+  [xc-menu-y-offset]="menuService.options.yOffset"
+  [xc-menu-x-position]="menuService.options.xPosition"
+  [xc-menu-y-position]="menuService.options.yPosition"
 ></xc-menu>
-<router-outlet *ngIf="visible"></router-outlet>
+@if (visible) {
+  <router-outlet></router-outlet>
+}
