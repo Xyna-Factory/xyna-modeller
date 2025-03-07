@@ -126,7 +126,10 @@ function Gruntfile(grunt) {
                 mode: "zip",
                 archive: "<%= releaseDir %>/<%= appName %>.war",
             },
-            files: [{ expand: true, cwd: "<%= buildDir %>/../impl/dist/xyna/browser/", src: ["**"] }]
+            files: [
+                { expand: true, cwd: "<%= buildDir %>/../impl/dist/xyna/browser/", src: ["**"] },
+                { expand: true, cwd: "<%= buildDir %>/../impl/dist/xyna/", src: ["3rdpartylicenses.txt"] }
+            ]
         }
     };
 
