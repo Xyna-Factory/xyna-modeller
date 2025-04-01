@@ -79,7 +79,7 @@ jobs:
             path: impl/projects/xyna/src/app/xfm/yggdrasil
 
     - name: Run the Anchore Grype scan action
-      uses: anchore/scan-action@v3.3.0
+      uses: anchore/scan-action@v6.1.0
       id: scan
       with:
         path: "."
