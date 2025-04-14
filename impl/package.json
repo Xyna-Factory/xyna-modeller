@@ -41,7 +41,6 @@
     "@angular/language-service": "19.2.5",
     "@stylistic/eslint-plugin": "^4.2.0",
     "@types/node": "^22.13.13",
-    "@types/node": "^22.13.13",
     "@types/offscreencanvas": "^2019.7.3",
     "@types/three": "^0.175.0",
     "@typescript-eslint/eslint-plugin": "^8.26.1",
@@ -49,13 +48,11 @@
     "eslint": "^9.22.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsdoc": "^50.6.9",
-    "eslint-plugin-jsdoc": "^50.6.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-zeta": "file:projects/xyna/src/app/zeta/lint/plugins/eslint-plugin-zeta",
     "globals": "^16.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0"
     "typescript-eslint": "^8.28.0"
   }
 }
