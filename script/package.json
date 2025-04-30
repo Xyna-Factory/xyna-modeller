@@ -8,9 +8,9 @@
   },
   "devDependencies": {
     "chalk": "^5.4.1",
-    "grunt": "^1.3.0",
+    "grunt": "^1.6.1",
     "grunt-cli": "^1.5.0",
-    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-compress": "^2.0.0",
     "grunt-contrib-concat": "^2.1.0",
     "grunt-replace": "^2.0.2",
