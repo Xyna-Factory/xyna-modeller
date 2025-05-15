@@ -1,6 +1,8 @@
 **/.DS_Store
 **/node_modules
-impl/.vscode/settings.json
-impl/.angular/**
-impl/dist/**
+impl/.vscode/
+impl/.angular/
+impl/dist/
 dist/
+impl/.nx/
+impl/.github/instructions/nx.instructions.md
