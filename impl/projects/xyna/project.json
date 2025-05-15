@@ -7,9 +7,7 @@
     "build": {
       "executor": "@angular/build:application",
       "options": {
-        "outputPath": {
-          "base": "dist/xyna"
-        },
+        "outputPath": "dist/xyna",
         "index": "projects/xyna/src/index.html",
         "polyfills": [
           "projects/xyna/src/polyfills.ts"
