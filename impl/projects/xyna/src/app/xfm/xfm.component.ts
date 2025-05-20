@@ -127,80 +127,84 @@ export class XfmComponent implements OnInit {
 
         RightsInterceptor.errorChange.pipe(
             debounceTime(500)
-        ).subscribe(errorObject =>
-            this.dialogService.error(this.i18n.translate(errorObject.message), null, errorObject.exceptionMessage)
-        );
+        ).subscribe({
+            next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), null, errorObject.exceptionMessage)
+        });
 
         messageBus.startUpdates();
-        authEvents.didLogout.subscribe(() => {
-            // reload page on logout (triggered by user or loss of session) to cleanup cache
-            window.location.reload();
-            messageBus.stopUpdates();
+        authEvents.didLogout.subscribe({
+            next: () => {
+                // reload page on logout (triggered by user or loss of session) to cleanup cache
+                window.location.reload();
+                messageBus.stopUpdates();
+            }
         });
     }
 
 
     ngOnInit() {
         this.keyService.keyEvents
-            .subscribe(eventObject => {
-                const key = eventObject.key.toLowerCase();
-                if ((key === 'f') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_FACTORY_MANAGER)) {
-                    if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
-                        eventObject.preventDefault();
-                    } else {
-                        eventObject.execute(
-                            () => this.router.navigate(['xfm/Factory-Manager/'])
-                        );
-                    }
-                }
-                if ((key === 'u') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_ACM)) {
-                    if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
-                        eventObject.preventDefault();
-                    } else {
-                        eventObject.execute(
-                            () => this.router.navigate(['xfm/acm/'])
-                        );
-                    }
-                }
-                if ((key === 'p') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_PROCESS_MODELLER)) {
-                    if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
-                        eventObject.preventDefault();
-                    } else {
-                        eventObject.execute(
-                            () => this.router.navigate(['xfm/Process-Modeller/'])
-                        );
-                    }
-                }
-                if ((key === 'm') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_PROCESS_MONITOR)) {
-                    if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
-                        eventObject.preventDefault();
-                    } else {
-                        eventObject.execute(
-                            () => this.router.navigate(['xfm/Process-Monitor/'])
-                        );
-                    }
-                }
-                if ((key === 't') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_TEST_FACTORY)) {
-                    if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
-                        eventObject.preventDefault();
-                    } else {
-                        eventObject.execute(
-                            () => this.router.navigate(['xfm/Test-Factory/'])
-                        );
-                    }
-                }
-
-                this.navListItems.forEach((item, index) => {
-                    if ((key === (index + 1).toString()) && eventObject.ctrl) {
+            .subscribe({
+                next: eventObject => {
+                    const key = eventObject.key.toLowerCase();
+                    if ((key === 'f') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_FACTORY_MANAGER)) {
                         if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
                             eventObject.preventDefault();
                         } else {
                             eventObject.execute(
-                                () => this.router.navigate(['xfm/' + item.link + '/'])
+                                () => this.router.navigate(['xfm/Factory-Manager/'])
                             );
                         }
                     }
-                });
+                    if ((key === 'u') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_ACM)) {
+                        if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
+                            eventObject.preventDefault();
+                        } else {
+                            eventObject.execute(
+                                () => this.router.navigate(['xfm/acm/'])
+                            );
+                        }
+                    }
+                    if ((key === 'p') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_PROCESS_MODELLER)) {
+                        if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
+                            eventObject.preventDefault();
+                        } else {
+                            eventObject.execute(
+                                () => this.router.navigate(['xfm/Process-Modeller/'])
+                            );
+                        }
+                    }
+                    if ((key === 'm') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_PROCESS_MONITOR)) {
+                        if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
+                            eventObject.preventDefault();
+                        } else {
+                            eventObject.execute(
+                                () => this.router.navigate(['xfm/Process-Monitor/'])
+                            );
+                        }
+                    }
+                    if ((key === 't') && eventObject.ctrl && eventObject.shift && this.authService.hasRight(RIGHT_TEST_FACTORY)) {
+                        if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
+                            eventObject.preventDefault();
+                        } else {
+                            eventObject.execute(
+                                () => this.router.navigate(['xfm/Test-Factory/'])
+                            );
+                        }
+                    }
+
+                    this.navListItems.forEach((item, index) => {
+                        if ((key === (index + 1).toString()) && eventObject.ctrl) {
+                            if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
+                                eventObject.preventDefault();
+                            } else {
+                                eventObject.execute(
+                                    () => this.router.navigate(['xfm/' + item.link + '/'])
+                                );
+                            }
+                        }
+                    });
+                }
             });
     }
 

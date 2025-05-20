@@ -1,5 +1,4 @@
-<xc-menu
-  [xc-menu-items]="menuService.items"
+<xc-menu [xc-menu-items]="menuService.items"
   [xc-menu-with-arrow]="menuService.options.withArrow"
   [xc-menu-x-nextto-trigger]="menuService.options.xNexttoTrigger"
   [xc-menu-y-nextto-trigger]="menuService.options.yNexttoTrigger"
@@ -7,7 +6,7 @@
   [xc-menu-y-offset]="menuService.options.yOffset"
   [xc-menu-x-position]="menuService.options.xPosition"
   [xc-menu-y-position]="menuService.options.yPosition"
-></xc-menu>
+ />
 @if (visible) {
-  <router-outlet></router-outlet>
+  <router-outlet />
 }
