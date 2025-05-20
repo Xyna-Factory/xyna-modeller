@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
@@ -44,12 +44,14 @@ import { RIGHT_PROCESS_MONITOR } from './processmonitor/const';
 import { ProcessMonitorName, ProcessMonitorVersion } from './processmonitor/version';
 import { RIGHT_TEST_FACTORY } from './testfactory/const';
 import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
+import { XcModule } from '../zeta/xc/xc.module';
+import { I18nModule } from '../zeta/i18n/i18n.module';
 
 
 @Component({
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, RouterOutlet]
 })
 export class XfmComponent implements OnInit {
 

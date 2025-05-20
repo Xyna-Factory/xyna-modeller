@@ -26,13 +26,10 @@ import { PlaygroundComponent } from './playground.component';
 @NgModule({
     imports: [
         CommonModule,
-        ZetaModule
-    ],
-    declarations: [
+        ZetaModule,
         PlaygroundComponent
     ],
-    providers: [
-    ]
+    providers: []
 })
 export class PlaygroundModule {
 }
