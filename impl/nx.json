@@ -22,7 +22,6 @@
       "default"
     ]
   },
-  "nxCloudId": "68245fda30644875877ab9ac",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
