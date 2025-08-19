@@ -50,5 +50,9 @@ export const xfm_translations_de_DE: I18nTranslation[] = [
     {
         key: 'xfm.insufficient-rights-message',
         value: 'Unzureichende Rechte zur Durchführung der Operation'
+    },
+    {
+        key: 'xfm.icon-help',
+        value: 'Hilfe'
     }
 ];
