@@ -62,7 +62,6 @@ export class XfmComponent implements OnInit {
     @ViewChild(XcStatusBarComponent)
     statusBar: XcStatusBarComponent;
 
-
     constructor(
         private readonly apiService: ApiService,
         private readonly dialogService: XcDialogService,
@@ -238,5 +237,9 @@ export class XfmComponent implements OnInit {
         } else {
             openRuntimeContextSelectionDialog();
         }
+    }
+
+    openWiki() {
+        window.open('https://github.com/Xyna-Factory/xyna/wiki', '_blank');
     }
 }
