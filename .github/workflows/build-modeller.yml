@@ -12,55 +12,55 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [22.x]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Check out zeta
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
             repository: Xyna-Factory/xyna-zeta
             path: impl/projects/xyna/src/app/zeta
             
     - name: Check out processmodeller
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
             repository: Xyna-Factory/xyna-process-modeller
             path: impl/projects/xyna/src/app/xfm/processmodeller
 
     - name: Check out processmonitor
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
             repository: Xyna-Factory/xyna-process-monitor
             path: impl/projects/xyna/src/app/xfm/processmonitor
 
     - name: Check out factorymanager
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
             repository: Xyna-Factory/xyna-factory-manager
             path: impl/projects/xyna/src/app/xfm/factorymanager
 
     - name: Check out testfactory
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
             repository: Xyna-Factory/xyna-test-factory
             path: impl/projects/xyna/src/app/xfm/testfactory
 
     - name: Check out acm
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
             repository: Xyna-Factory/xyna-xacm
             path: impl/projects/xyna/src/app/xfm/acm
 
     - name: Check out yggdrasil
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
             repository: Xyna-Factory/xyna-yggdrasil
             path: impl/projects/xyna/src/app/xfm/yggdrasil
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
 
