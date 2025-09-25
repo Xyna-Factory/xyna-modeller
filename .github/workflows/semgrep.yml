@@ -19,6 +19,8 @@ on:
   schedule:
     - cron: '43 22 * * 6'  # run once a week, Sat at 22:43
 
+  workflow_dispatch:
+
 permissions:
   contents: read
 
