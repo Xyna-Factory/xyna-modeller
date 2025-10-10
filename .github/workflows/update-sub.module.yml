@@ -22,7 +22,7 @@ jobs:
        
      - name: Create new branch
        env:
-          BRANCH_UPATE: ${{ inputs.branch_update }}     
+          BRANCH_UPATE: ${{ inputs.branch_update }}
        run: |
          git branch "$BRANCH_UPATE"
          git switch "$BRANCH_UPATE"
