@@ -56,7 +56,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           SECTRETS_PAD: ${{ secrets.PAT }}
           BRANCH_UPATE: ${{ inputs.branch_update }}
-       run:
+       run: |
          git config --global user.name "$GITHUB_ACTOR"
          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
          git remote set-url origin "https://x-access-token:$SECTRETS_PAD@github.com/$GITHUB_REPOSITORY"
