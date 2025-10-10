@@ -22,8 +22,8 @@ jobs:
        
      - name: Create new branch
        run: |
-         git branch "$inputs.branch_update"
-         git switch "$inputs.branch_update"
+         git branch "${{ inputs.branch_update }}"
+         git switch "${{ inputs.branch_update }}"
 
      - name: Init submodule
        run: |
@@ -54,9 +54,9 @@ jobs:
          git config --global user.email '${{ github.actor }}@users.noreply.github.com'
          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
          git commit -m "Update dependencies"
-         git push --set-upstream origin "$inputs.branch_update"
+         git push --set-upstream origin "${{ inputs.branch_update }}"
      
      - name: Create Pull Request
        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: gh pr create --title "Update Submodule Dependencies" --body "Updated submodules" --base main --head "$inputs.branch_update"
+       run: gh pr create --title "Update Submodule Dependencies" --body "Updated submodules" --base main --head "${{ inputs.branch_update }}"
