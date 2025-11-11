@@ -21,9 +21,11 @@ jobs:
        uses: actions/checkout@v4
        
      - name: Create new branch
+       env:
+          BRANCH_UPATE: ${{ inputs.branch_update }}
        run: |
-         git branch ${{ inputs.branch_update }}
-         git switch ${{ inputs.branch_update }}
+         git branch "$BRANCH_UPATE"
+         git switch "$BRANCH_UPATE"
 
      - name: Init submodule
        run: |
@@ -49,14 +51,20 @@ jobs:
          git add impl/projects/xyna/src/app/xfm/yggdrasil
 
      - name: Commit
+       env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SECTRETS_PAD: ${{ secrets.PAT }}
+          BRANCH_UPATE: ${{ inputs.branch_update }}
        run: |
-         git config --global user.name '${{ github.actor }}'
-         git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-         git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
+         git config --global user.name "$GITHUB_ACTOR"
+         git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+         git remote set-url origin "https://x-access-token:$SECTRETS_PAD@github.com/$GITHUB_REPOSITORY"
          git commit -m "Update dependencies"
-         git push --set-upstream origin ${{ inputs.branch_update }}
+         git push --set-upstream origin "$BRANCH_UPATE"
      
      - name: Create Pull Request
        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: gh pr create --title "Update Submodule Dependencies" --body "Updated submodules" --base main --head ${{ inputs.branch_update }} 
+          BRANCH_UPATE: ${{ inputs.branch_update }}
+       run: gh pr create --title "Update Submodule Dependencies" --body "Updated submodules" --base main --head "$BRANCH_UPATE"
