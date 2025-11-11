@@ -19,31 +19,35 @@ on:
   schedule:
     - cron: '43 22 * * 6'  # run once a week, Sat at 22:43
 
+  workflow_dispatch:
+
 permissions:
+  # This permission is required when uploading sarifs to any repository at GitHub
+  security-events: write
+  # These permissions are only required when uploading sarifs to private and internal repositories at GitHub
   contents: read
+  actions: read
 
 jobs:
   semgrep:
-    permissions:
-      contents: read # for actions/checkout to fetch code
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     name: Scan
     runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
     steps:
       # Checkout project source
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
-      # Scan code using project's configuration on https://semgrep.dev/manage
-      - uses: returntocorp/semgrep-action@fcd5ab7459e8d91cb1777481980d1b18b4fc6735
-        with:
-          publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
-          publishDeployment: ${{ secrets.SEMGREP_DEPLOYMENT_ID }}
-          generateSarif: "1"
+      - run: semgrep scan --sarif --sarif-output=semgrep.sarif
+        env:
+          # Connect to Semgrep AppSec Platform through your SEMGREP_APP_TOKEN.
+          # Generate a token from Semgrep AppSec Platform > Settings
+          # and add it to your GitHub secrets.
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: semgrep.sarif
         if: always()

@@ -18,7 +18,7 @@ on:
     # The branches below must be a subset of the branches above
     #branches: [ "main" ]
   schedule:
-    - cron: '0 0 * * *'  # run at 12.am daily
+    - cron: '0 0 * * *'
     
   workflow_dispatch:
 
@@ -96,6 +96,8 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: 'javascript'
+        # Add a unique identifier to the cache key
+        trap-caching: false
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.

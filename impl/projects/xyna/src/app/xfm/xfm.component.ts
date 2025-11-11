@@ -23,7 +23,7 @@ import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
 import { ProcessModellerName, ProcessModellerVersion } from '@pmod/version';
 import { MessageBusService } from '@yggdrasil/events';
 import { YggdrasilName, YggdrasilVersion } from '@yggdrasil/version';
-import { ApiService, RuntimeContext, RuntimeContextSelectionSettings } from '@zeta/api';
+import { ApiService, RuntimeContext, RuntimeContextSelectionSettings, XoRuntimeContext } from '@zeta/api';
 import { RightsInterceptor } from '@zeta/api/rights.interceptor';
 import { AuthService } from '@zeta/auth';
 import { AuthEventService } from '@zeta/auth/auth-event.service';
@@ -42,7 +42,7 @@ import { RIGHT_PROCESS_MODELLER } from './processmodeller/const';
 import { ModellerSettingsDialogComponent } from './processmodeller/modeller-settings-dialog/modeller-settings-dialog.component';
 import { RIGHT_PROCESS_MONITOR } from './processmonitor/const';
 import { ProcessMonitorName, ProcessMonitorVersion } from './processmonitor/version';
-import { RIGHT_TEST_FACTORY } from './testfactory/const';
+import { APPLICATION_TEST_FACTORY, RIGHT_TEST_FACTORY } from './testfactory/const';
 import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 
 
@@ -61,7 +61,6 @@ export class XfmComponent implements OnInit {
 
     @ViewChild(XcStatusBarComponent)
     statusBar: XcStatusBarComponent;
-
 
     constructor(
         private readonly apiService: ApiService,
@@ -84,16 +83,31 @@ export class XfmComponent implements OnInit {
             { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translate('xfm.acm-tooltip') }
         ];
 
-        [
-            RIGHT_PROCESS_MODELLER,
-            RIGHT_FACTORY_MANAGER,
-            RIGHT_PROCESS_MONITOR,
-            RIGHT_TEST_FACTORY,
-            RIGHT_ACM
-        ].forEach((right, idx) => {
-            if (authService.hasRight(right)) {
-                this.navListItems.push(navListItems[idx]);
-            }
+        this.apiService.getRuntimeContexts(false).subscribe({
+            next: (rtcArr: XoRuntimeContext[]) => {
+
+                const hasTestFactoryRTC = rtcArr.some(rtc => rtc.name === APPLICATION_TEST_FACTORY);
+
+                [
+                    RIGHT_PROCESS_MODELLER,
+                    RIGHT_FACTORY_MANAGER,
+                    RIGHT_PROCESS_MONITOR,
+                    RIGHT_TEST_FACTORY,
+                    RIGHT_ACM
+                ].forEach((right, idx) => {
+                    if (authService.hasRight(right)) {
+                        if (right === RIGHT_TEST_FACTORY) {
+                            if (hasTestFactoryRTC) {
+                                this.navListItems.push(navListItems[idx]);
+                            }
+                        } else {
+                            this.navListItems.push(navListItems[idx]);
+                        }
+                    }
+                });
+
+            },
+            error: error => this.dialogService.error(error)
         });
 
         this.applicationVersions = [
@@ -223,5 +237,9 @@ export class XfmComponent implements OnInit {
         } else {
             openRuntimeContextSelectionDialog();
         }
+    }
+
+    openWiki() {
+        window.open('https://github.com/Xyna-Factory/xyna/wiki', '_blank');
     }
 }
