@@ -17,19 +17,24 @@
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
+import { ProcessmodellerModule } from '@pmod/processmodeller.module';
 import { ZetaModule } from '@zeta/zeta.module';
 
-import { PlaygroundComponent } from './playground.component';
+import { XfmComponent } from './xfm.component';
 
 
 @NgModule({
     imports: [
         CommonModule,
+        RouterModule,
         ZetaModule,
-        PlaygroundComponent
+        ProcessmodellerModule
     ],
-    providers: []
+    declarations: [
+        XfmComponent
+    ]
 })
-export class PlaygroundModule {
+export class XfmModule {
 }
