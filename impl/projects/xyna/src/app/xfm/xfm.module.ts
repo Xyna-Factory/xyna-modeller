@@ -22,8 +22,6 @@ import { RouterModule } from '@angular/router';
 import { ProcessmodellerModule } from '@pmod/processmodeller.module';
 import { ZetaModule } from '@zeta/zeta.module';
 
-import { XfmComponent } from './xfm.component';
-
 
 @NgModule({
     imports: [
@@ -32,9 +30,6 @@ import { XfmComponent } from './xfm.component';
         ZetaModule,
         ProcessmodellerModule
     ],
-    declarations: [
-        XfmComponent
-    ]
 })
 export class XfmModule {
 }
