@@ -25,7 +25,6 @@ import { ProcessmodellerRoutes, ProcessmodellerRoutingModules, ProcessmodellerRo
 import { ProcessmonitorRoutes, ProcessmonitorRoutingModules, ProcessmonitorRoutingProviders } from './processmonitor/processmonitor.routing';
 import { TestfactoryRoutes, TestfactoryRoutingModules, TestfactoryRoutingProviders } from './testfactory/testfactory.routing';
 import { XfmComponent } from './xfm.component';
-import { XfmModule } from './xfm.module';
 
 
 const root = 'xfm';
@@ -52,7 +51,6 @@ export const XfmRoutes: Routes = [
 
 export const XfmRoutingModules = [
     RouterModule.forChild(XfmRoutes),
-    XfmModule,
     ...AcmRoutingModules,
     ...FactoryManagerRoutingModules,
     ...ProcessmodellerRoutingModules,

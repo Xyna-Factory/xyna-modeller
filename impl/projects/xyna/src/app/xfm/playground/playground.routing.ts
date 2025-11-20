@@ -23,7 +23,6 @@ import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
 
 import { PlaygroundComponent } from './playground.component';
-import { PlaygroundModule } from './playground.module';
 
 
 const root = 'Playground';
@@ -56,8 +55,7 @@ export const PlaygroundRoutes: Routes = [
 ];
 
 export const PlaygroundRoutingModules = [
-    RouterModule.forChild(PlaygroundRoutes),
-    PlaygroundModule
+    RouterModule.forChild(PlaygroundRoutes)
 ];
 
 export const PlaygroundRoutingProviders = [

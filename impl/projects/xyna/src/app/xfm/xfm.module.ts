@@ -19,15 +19,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { FactoryManagerModule } from '@fman/factory-manager.module';
-import { MessageBusModule } from '@yggdrasil/events';
+import { ProcessmodellerModule } from '@pmod/processmodeller.module';
 import { ZetaModule } from '@zeta/zeta.module';
-
-import { AcmModule } from './acm/acm.module';
-import { ProcessmodellerModule } from './processmodeller/processmodeller.module';
-import { ProcessmonitorModule } from './processmonitor/processmonitor.module';
-import { TestfactoryModule } from './testfactory/testfactory.module';
-import { XfmComponent } from './xfm.component';
 
 
 @NgModule({
@@ -35,17 +28,8 @@ import { XfmComponent } from './xfm.component';
         CommonModule,
         RouterModule,
         ZetaModule,
-
-        AcmModule,
-        FactoryManagerModule,
-        ProcessmodellerModule,
-        ProcessmonitorModule,
-        TestfactoryModule,
-        MessageBusModule
+        ProcessmodellerModule
     ],
-    declarations: [
-        XfmComponent
-    ]
 })
 export class XfmModule {
 }
