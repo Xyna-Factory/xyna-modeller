@@ -1,0 +1,93 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "projects": {
+    "xyna": {
+      "projectType": "application",
+      "root": "projects/xyna",
+      "sourceRoot": "projects/xyna/src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/xyna",
+            "index": "projects/xyna/src/index.html",
+            "browser": "projects/xyna/src/main.ts",
+            "polyfills": [
+              "projects/xyna/src/polyfills.ts"
+            ],
+            "tsConfig": "projects/xyna/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "favicon.ico",
+                "input": "projects/xyna/src",
+                "output": "./"
+              },
+              {
+                "glob": "**/*.worker.js",
+                "input": "node_modules/monaco-editor/esm/vs",
+                "output": "assets/monaco"
+              },
+              {
+                "glob": "base/worker/workerMain.js",
+                "input": "node_modules/monaco-editor/esm/vs",
+                "output": "assets/monaco"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/xyna/src/WEB-INF",
+                "output": "WEB-INF"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/xyna/src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/xyna/src/app/zeta/assets",
+                "output": "assets/zeta"
+              }
+            ],
+            "styles": [
+              "projects/xyna/src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/xyna/src/environments/environment.ts",
+                  "with": "projects/xyna/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "aot": true,
+              "extractLicenses": true
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "xyna:build:development"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "xyna:build:production"
+            },
+            "development": {
+              "buildTarget": "xyna:build:development"
+            }
+          }
+        }
+      }
+    }
+  }
+}
