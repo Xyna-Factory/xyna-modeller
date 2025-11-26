@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { AppTitleComponent } from '@zeta/nav';
@@ -36,16 +36,16 @@ export class AppComponent extends AppTitleComponent {
 
   title = 'Xyna';
 
-  visible = true;
+  visible = signal(true);
 
 
   constructor() {
     super();
     this.i18nService.contextDismantlingSearch = true;
     this.localeService.languageChange.subscribe(() => {
-      this.visible = false;
+      this.visible.set(false);
       setTimeout(() => {
-        this.visible = true;
+        this.visible.set(true);
       }, 0);
     });
   }

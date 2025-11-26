@@ -7,6 +7,6 @@
   [xc-menu-x-position]="menuService.options.xPosition"
   [xc-menu-y-position]="menuService.options.yPosition"
  />
-@if (visible) {
+@if (visible()) {
   <router-outlet />
 }
