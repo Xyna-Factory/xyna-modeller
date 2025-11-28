@@ -5,9 +5,10 @@
         <xc-status-bar></xc-status-bar>
         <xc-button (click)="changeRuntimeContext()">{{currentRuntimeContext?.uniqueKey ||
             ('button-choose-runtime-context' | xcI18n)}}</xc-button>
-        <xc-icon-button *xc-menu-service="true; let menuService" [xc-menu-trigger]="menuService.component"
-            (xc-menu-trigger)="menuService.set(usermenuItems, {withArrow: true, xPosition: 'before', yNexttoTrigger: true, yOffset: 6})"
-            xc-icon-name="user" color="normal"></xc-icon-button>
+        <xc-icon-button [xc-menu-trigger]="userMenu" xc-icon-name="user" color="normal"></xc-icon-button>
+        <xc-menu #userMenu [xc-menu-items]="usermenuItems" xc-menu-y-nextto-trigger xc-menu-x-offset="6" xc-menu-y-offset="12"
+            xc-menu-with-arrow>
+        </xc-menu>
         <xc-icon-button xc-i18n xc-icon-name="sp-helper" xc-icon-style="modeller" xc-tooltip="icon-help"
             xc-tooltip-position="bottom" (click)="openWiki()"></xc-icon-button>
     </div>
