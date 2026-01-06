@@ -1,7 +1,7 @@
 {
   "name": "xyna",
   "title": "Xyna Modeller",
-  "version": "10.6.0.0",
+  "version": "10.6.0.1",
   "private": true,
   "type": "module",
   "scripts": {
