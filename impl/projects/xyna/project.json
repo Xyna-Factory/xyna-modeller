@@ -47,7 +47,8 @@
           }
         ],
         "styles": [
-          "projects/xyna/src/styles.scss"
+          "projects/xyna/src/styles.scss",
+          "node_modules/monaco-editor/min/vs/editor/editor.main.css"
         ],
         "stylePreprocessorOptions": {
           "includePaths": [
