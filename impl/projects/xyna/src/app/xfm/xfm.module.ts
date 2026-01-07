@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { ProcessmodellerModule } from '@pmod/processmodeller.module';
 import { ZetaModule } from '@zeta/zeta.module';
 
 
@@ -27,8 +26,7 @@ import { ZetaModule } from '@zeta/zeta.module';
     imports: [
         CommonModule,
         RouterModule,
-        ZetaModule,
-        ProcessmodellerModule
+        ZetaModule
     ],
 })
 export class XfmModule {

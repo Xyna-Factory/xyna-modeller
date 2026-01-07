@@ -34,6 +34,8 @@ import { XcDialogService, XcMenuItem, XcNavListItem, XcNavListOrientation, XcSta
 
 import { debounceTime } from 'rxjs/operators';
 
+import { I18nModule } from '../zeta/i18n/i18n.module';
+import { XcModule } from '../zeta/xc/xc.module';
 import { RIGHT_ACM } from './acm/const';
 import { AccessControlManagementName, AccessControlManagementVersion } from './acm/version';
 import { xfm_translations_de_DE } from './locale/xfm-translations.de-DE';
