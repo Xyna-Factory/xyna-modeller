@@ -46,8 +46,6 @@ import { RIGHT_PROCESS_MONITOR } from './processmonitor/const';
 import { ProcessMonitorName, ProcessMonitorVersion } from './processmonitor/version';
 import { APPLICATION_TEST_FACTORY, RIGHT_TEST_FACTORY } from './testfactory/const';
 import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
-import { XcModule } from '../zeta/xc/xc.module';
-import { I18nModule } from '../zeta/i18n/i18n.module';
 
 
 @Component({

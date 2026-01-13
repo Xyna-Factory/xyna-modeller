@@ -26,29 +26,21 @@
  * Overridden Zeta Styles
  ****************************************************/
 
-$xc-title-bar-box-shadow-visible: true;
-
-// Button
-$xc-button-background-color: #454548;
-$xc-button-border-color: $color-gray-1;
-$xc-button-border-radius: 4px;
-
-
 
 /****************************************************
   * XFM Variables
   ****************************************************/
 
-$navigation-highlight-color-processmodeller: $color-invert;
-$navigation-highlight-color-factorymanager: $color-invert;
-$navigation-highlight-color-processmonitor: $color-invert;
-$navigation-highlight-color-testfactory: $color-invert;
-$navigation-highlight-color-acm: $color-invert;
+$navigation-highlight-color-processmodeller: #f10870;
+$navigation-highlight-color-factorymanager: #00a0ff;
+$navigation-highlight-color-processmonitor: #5de700;
+$navigation-highlight-color-testfactory: #e5fcff;
+$navigation-highlight-color-acm: #8f0088;
 
-@if $theme == xyna {
-    $navigation-highlight-color-processmodeller: #f10870;
-    $navigation-highlight-color-factorymanager: #00a0ff;
-    $navigation-highlight-color-processmonitor: #5de700;
-    $navigation-highlight-color-testfactory: #e5fcff;
-    $navigation-highlight-color-acm: #8f0088;
+@if $theme ==xyna {
+  $navigation-highlight-color-processmodeller: #f10870;
+  $navigation-highlight-color-factorymanager: #00a0ff;
+  $navigation-highlight-color-processmonitor: #5de700;
+  $navigation-highlight-color-testfactory: #e5fcff;
+  $navigation-highlight-color-acm: #8f0088;
 }
