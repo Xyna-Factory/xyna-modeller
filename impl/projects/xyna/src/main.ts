@@ -15,16 +15,28 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { bootstrapApplication, BrowserModule, Title } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { environment } from '@environments/environment';
+import { I18nModule } from '@zeta/i18n';
 
-import { AppModule } from './app/app.module';
+import { AppComponent } from './app/app.component';
+import { AppRoutingModules, AppRoutingProviders } from './app/app.routing';
 
 
 if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.log(err));
+bootstrapApplication(AppComponent, {
+    providers: [
+        importProvidersFrom(I18nModule),
+        importProvidersFrom(...AppRoutingModules),
+        ...AppRoutingProviders,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideAnimations()
+    ]
+}).catch(err => console.log(err));

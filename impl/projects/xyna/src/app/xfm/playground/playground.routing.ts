@@ -27,7 +27,7 @@ import { PlaygroundComponent } from './playground.component';
 
 const root = 'Playground';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PlaygroundGuardService  {
     canActivate(activatedRoute: ActivatedRouteSnapshot, routerState: RouterStateSnapshot): Observable<boolean> {
         return of(!environment.production);
