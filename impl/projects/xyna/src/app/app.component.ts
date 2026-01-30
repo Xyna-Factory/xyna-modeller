@@ -16,17 +16,20 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, ViewChild } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { AppTitleComponent } from '@zeta/nav';
-import { XcMenuComponent, XcMenuService } from '@zeta/xc';
+
+import { XcMenuComponent } from './zeta/xc/xc-menu/xc-menu.component';
+import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  standalone: false
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [XcMenuComponent, RouterOutlet]
 })
 export class AppComponent extends AppTitleComponent {
 

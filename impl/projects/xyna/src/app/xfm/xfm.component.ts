@@ -30,7 +30,7 @@ import { AuthEventService } from '@zeta/auth/auth-event.service';
 import { KeyboardEventType, KeyDistributionService } from '@zeta/base';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RuntimeContextSelectionComponent } from '@zeta/nav';
-import { XcDialogService, XcMenuItem, XcNavListItem, XcNavListOrientation, XcStatusBarComponent } from '@zeta/xc';
+import { XcDialogService, XcMenuItem, XcMenuServiceDirective, XcNavListItem, XcNavListOrientation, XcStatusBarComponent } from '@zeta/xc';
 
 import { debounceTime } from 'rxjs/operators';
 
@@ -51,7 +51,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 @Component({
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
-    imports: [XcModule, I18nModule, RouterOutlet]
+    imports: [XcModule, I18nModule, XcMenuServiceDirective, RouterOutlet]
 })
 export class XfmComponent implements OnInit {
     private readonly apiService = inject(ApiService);
