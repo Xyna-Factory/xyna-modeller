@@ -73,9 +73,6 @@ export class XfmComponent implements OnInit {
     @ViewChild(XcStatusBarComponent)
     statusBar: XcStatusBarComponent;
 
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor();
-
     constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, xfm_translations_en_US);
