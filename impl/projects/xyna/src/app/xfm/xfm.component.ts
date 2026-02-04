@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
@@ -54,6 +54,15 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
     imports: [XcModule, I18nModule, XcMenuServiceDirective, RouterOutlet]
 })
 export class XfmComponent implements OnInit {
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly authService = inject(AuthService);
+    readonly authEvents = inject(AuthEventService);
+    private readonly i18n = inject(I18nService);
+    private readonly keyService = inject(KeyDistributionService);
+    private readonly router = inject(Router);
+    readonly messageBus = inject(MessageBusService);
+
 
     readonly navListItems: XcNavListItem[] = [];
     readonly navListOrientation = XcNavListOrientation.TOP;
@@ -64,16 +73,7 @@ export class XfmComponent implements OnInit {
     @ViewChild(XcStatusBarComponent)
     statusBar: XcStatusBarComponent;
 
-    constructor(
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService,
-        private readonly authService: AuthService,
-        readonly authEvents: AuthEventService,
-        private readonly i18n: I18nService,
-        private readonly keyService: KeyDistributionService,
-        private readonly router: Router,
-        readonly messageBus: MessageBusService
-    ) {
+    constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, xfm_translations_en_US);
 
@@ -97,7 +97,7 @@ export class XfmComponent implements OnInit {
                     RIGHT_TEST_FACTORY,
                     RIGHT_ACM
                 ].forEach((right, idx) => {
-                    if (authService.hasRight(right)) {
+                    if (this.authService.hasRight(right)) {
                         if (right === RIGHT_TEST_FACTORY) {
                             if (hasTestFactoryRTC) {
                                 this.navListItems.push(navListItems[idx]);
@@ -113,7 +113,7 @@ export class XfmComponent implements OnInit {
         });
 
         this.applicationVersions = [
-            ['Xyna Factory Server', authEvents.sessionInfoSubject.value?.xynaVersion ?? ''],
+            ['Xyna Factory Server', this.authEvents.sessionInfoSubject.value?.xynaVersion ?? ''],
             [ProcessModellerName, ProcessModellerVersion],
             [FactoryManagerName, FactoryManagerVersion],
             [ProcessMonitorName, ProcessMonitorVersion],
@@ -124,18 +124,18 @@ export class XfmComponent implements OnInit {
 
         this.usermenuItems.push(
             <XcMenuItem>{
-                name: authService.username,
+                name: this.authService.username,
                 icon: 'user',
                 disabled: true
             },
             <XcMenuItem>{
-                name: i18n.translate('xfm.settings'), icon: 'settings',
-                click: () => dialogService.custom(ModellerSettingsDialogComponent)
+                name: this.i18n.translate('xfm.settings'), icon: 'settings',
+                click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
             },
             <XcMenuItem>{
                 name: 'Logout',
                 icon: 'arrowleft',
-                click: () => authService.logout().subscribe()
+                click: () => this.authService.logout().subscribe()
             }
         );
 
@@ -145,12 +145,12 @@ export class XfmComponent implements OnInit {
             next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), null, errorObject.exceptionMessage)
         });
 
-        messageBus.startUpdates();
-        authEvents.didLogout.subscribe({
+        this.messageBus.startUpdates();
+        this.authEvents.didLogout.subscribe({
             next: () => {
                 // reload page on logout (triggered by user or loss of session) to cleanup cache
                 window.location.reload();
-                messageBus.stopUpdates();
+                this.messageBus.stopUpdates();
             }
         });
     }
