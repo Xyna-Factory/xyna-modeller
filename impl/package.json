@@ -1,7 +1,7 @@
 {
   "name": "xyna",
   "title": "Xyna Modeller",
-  "version": "10.7.0.0",
+  "version": "10.7.0.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -33,11 +33,11 @@
     "zone.js": "0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "20.3.10",
+    "@angular-devkit/build-angular": "20.3.16",
     "@angular-devkit/core": "20.3.10",
     "@angular-devkit/schematics": "20.3.10",
     "@angular-eslint/eslint-plugin": "^20.6.0",
-    "@angular/cli": "20.3.14",
+    "@angular/cli": "20.3.16",
     "@angular/compiler-cli": "20.3.16",
     "@schematics/angular": "20.3.10",
     "@stylistic/eslint-plugin": "^5.5.0",
