@@ -1,42 +1,42 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "resolveJsonModule": true,
-        "target": "ES2024",
-        "module": "ESNext",
-        "useDefineForClassFields": false,
-        "typeRoots": [
-            "node_modules/@types"
+      "baseUrl": "./",
+      "outDir": "./dist/out-tsc",
+      "sourceMap": true,
+      "declaration": false,
+      "moduleResolution": "bundler",
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "resolveJsonModule": true,
+      "target": "ES2024",
+      "module": "ESNext",
+      "useDefineForClassFields": false,
+      "typeRoots": [
+        "node_modules/@types"
+      ],
+      "lib": [
+        "es2024",
+        "dom"
+      ],
+      "paths": {
+        "@zeta/*": [
+          "projects/xyna/src/app/zeta/*"
         ],
-        "lib": [
-            "es2024",
-            "dom"
+        "@pmod/*": [
+          "projects/xyna/src/app/xfm/processmodeller/*"
         ],
-        "paths": {
-            "@zeta/*": [
-                "projects/xyna/src/app/zeta/*"
-            ],
-            "@pmod/*": [
-                "projects/xyna/src/app/xfm/processmodeller/*"
-            ],
-            "@fman/*": [
-                "projects/xyna/src/app/xfm/factorymanager/*"
-            ],
-            "@yggdrasil/*": [
-                "projects/xyna/src/app/xfm/yggdrasil/*"
-            ],
-            "@environments/*": [
-                "projects/xyna/src/environments/*"
-            ]
-        }
+        "@fman/*": [
+          "projects/xyna/src/app/xfm/factorymanager/*"
+        ],
+        "@yggdrasil/*": [
+          "projects/xyna/src/app/xfm/yggdrasil/*"
+        ],
+        "@environments/*": [
+          "projects/xyna/src/environments/*"
+        ]
+      }
     },
     "angularCompilerOptions": {
         "preserveWhitespaces": false
