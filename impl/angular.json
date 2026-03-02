@@ -13,7 +13,9 @@
                         "outputPath": "dist/xyna",
                         "index": "projects/xyna/src/index.html",
                         "browser": "projects/xyna/src/main.ts",
-                        "polyfills": ["projects/xyna/src/polyfills.ts"],
+                        "polyfills": [
+                            "projects/xyna/src/polyfills.ts"
+                        ],
                         "tsConfig": "projects/xyna/tsconfig.app.json",
                         "assets": [
                             {
@@ -22,14 +24,9 @@
                                 "output": "./"
                             },
                             {
-                                "glob": "**/*.worker.js",
-                                "input": "node_modules/monaco-editor/esm/vs",
-                                "output": "assets/monaco"
-                            },
-                            {
-                                "glob": "base/worker/workerMain.js",
-                                "input": "node_modules/monaco-editor/esm/vs",
-                                "output": "assets/monaco"
+                                "glob": "**/*",
+                                "input": "node_modules/monaco-editor",
+                                "output": "/assets/monaco/"
                             },
                             {
                                 "glob": "**/*",
@@ -48,8 +45,7 @@
                             }
                         ],
                         "styles": [
-                            "projects/xyna/src/styles.scss",
-                            "node_modules/monaco-editor/min/vs/editor/editor.main.css"
+                            "projects/xyna/src/styles.scss"
                         ]
                     },
                     "configurations": {
@@ -88,5 +84,8 @@
                 }
             }
         }
+    },
+    "cli": {
+        "analytics": false
     }
 }
