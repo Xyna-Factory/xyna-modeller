@@ -21,7 +21,6 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { environment } from '@environments/environment';
-import { I18nModule } from '@zeta/i18n';
 
 import { AppComponent } from './app/app.component';
 import { AppRoutingModules, AppRoutingProviders } from './app/app.routing';
@@ -41,7 +40,6 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
     providers: [
         provideZoneChangeDetection(),
-        importProvidersFrom(I18nModule),
         importProvidersFrom(...AppRoutingModules),
         importProvidersFrom(MonacoEditorModule.forRoot(monacoConfig)),
         ...AppRoutingProviders,
