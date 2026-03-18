@@ -28,13 +28,12 @@ import { RightsInterceptor } from '@zeta/api/rights.interceptor';
 import { AuthService } from '@zeta/auth';
 import { AuthEventService } from '@zeta/auth/auth-event.service';
 import { KeyboardEventType, KeyDistributionService } from '@zeta/base';
-import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../zeta/i18n/';
 import { RuntimeContextSelectionComponent } from '@zeta/nav';
 import { XcDialogService, XcMenuItem, XcMenuServiceDirective, XcNavListItem, XcNavListOrientation, XcStatusBarComponent } from '@zeta/xc';
 
 import { debounceTime } from 'rxjs/operators';
 
-import { I18nModule } from '../zeta/i18n/i18n.module';
 import { XcModule } from '../zeta/xc/xc.module';
 import { RIGHT_ACM } from './acm/const';
 import { AccessControlManagementName, AccessControlManagementVersion } from './acm/version';
@@ -51,7 +50,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 @Component({
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
-    imports: [XcModule, I18nModule, XcMenuServiceDirective, RouterOutlet]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
 })
 export class XfmComponent implements OnInit {
     private readonly apiService = inject(ApiService);
