@@ -15,6 +15,8 @@
     "useDefineForClassFields": false,
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2022", "dom"],
+    "noImplicitAny": false,
+    "strictNullChecks": false,
     "paths": {
       "@zeta/*": ["projects/xyna/src/app/zeta/*"],
       "@pmod/*": ["projects/xyna/src/app/xfm/processmodeller/*"],
@@ -24,6 +26,6 @@
     }
   },
   "angularCompilerOptions": {
-    "preserveWhitespaces": false
+    "preserveWhitespaces": false,
   }
 }
