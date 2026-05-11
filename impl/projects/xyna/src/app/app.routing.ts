@@ -16,7 +16,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { RouterModule, Routes } from '@angular/router';
-
 import { authGuardCanActivate } from '@zeta/auth';
 import { ZetaRoutes, ZetaRoutingModules, ZetaRoutingProviders } from '@zeta/zeta.routing';
 

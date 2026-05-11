@@ -15,9 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { debounceTime } from 'rxjs/operators';
+
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
 import { ProcessModellerName, ProcessModellerVersion } from '@pmod/version';
@@ -28,12 +29,10 @@ import { RightsInterceptor } from '@zeta/api/rights.interceptor';
 import { AuthService } from '@zeta/auth';
 import { AuthEventService } from '@zeta/auth/auth-event.service';
 import { KeyboardEventType, KeyDistributionService } from '@zeta/base';
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../zeta/i18n/';
 import { RuntimeContextSelectionComponent } from '@zeta/nav';
 import { XcDialogService, XcMenuItem, XcMenuServiceDirective, XcNavListItem, XcNavListOrientation, XcStatusBarComponent } from '@zeta/xc';
 
-import { debounceTime } from 'rxjs/operators';
-
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../zeta/i18n/';
 import { XcModule } from '../zeta/xc/xc.module';
 import { RIGHT_ACM } from './acm/const';
 import { AccessControlManagementName, AccessControlManagementVersion } from './acm/version';
@@ -70,7 +69,7 @@ export class XfmComponent implements OnInit {
     readonly applicationVersions: string[];
 
     @ViewChild(XcStatusBarComponent)
-    statusBar: XcStatusBarComponent;
+    statusBar!: XcStatusBarComponent;
 
     constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
@@ -141,7 +140,7 @@ export class XfmComponent implements OnInit {
         RightsInterceptor.errorChange.pipe(
             debounceTime(500)
         ).subscribe({
-            next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), null, errorObject.exceptionMessage)
+            next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), undefined, errorObject.exceptionMessage)
         });
 
         this.messageBus.startUpdates();

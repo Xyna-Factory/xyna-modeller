@@ -17,7 +17,6 @@
  */
 import { Component, inject, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { AppTitleComponent } from '@zeta/nav';
 
