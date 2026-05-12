@@ -7,7 +7,6 @@ import angularPlugin from '@angular-eslint/eslint-plugin';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import importPlugin from 'eslint-plugin-import';
 import zetaPlugin from 'eslint-plugin-zeta';
-import path from 'node:path';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -17,11 +16,7 @@ export default [
   {
     languageOptions: {
       parser: typescriptParser,
-      globals: globals.browser,
-      parserOptions: {
-        project: ['./tsconfig.json'],
-        tsconfigRootDir: path.resolve(__dirname)
-      }
+      globals: globals.browser
     },
     ignores: [
       '**/node_modules/**',
