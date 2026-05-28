@@ -20,7 +20,9 @@ import { ZipArchive } from "archiver";
 
 const implDir = '../impl';
 const buildDir = implDir.concat('/dist');
-const mainDir = buildDir.concat('/xyna/browser');
+const xynaDir = buildDir.concat('/xyna');
+const mainDir = xynaDir.concat('/browser');
+const thridpartylicenses = '3rdpartylicenses.txt';
 const indexHtml = mainDir.concat('/index.html');
 const webXML = mainDir.concat('/WEB-INF/web.xml');
 const releaseDir = '../dist';
@@ -141,7 +143,8 @@ function buildWar(baseurl) {
 
     archive.pipe(output);
 
-    archive.directory(buildDir, false);
+    archive.file(xynaDir.concat('/', thridpartylicenses), { name: thridpartylicenses });
+    archive.directory(mainDir, false);
 
     return archive.finalize();
 }
