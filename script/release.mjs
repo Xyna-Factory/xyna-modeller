@@ -1,5 +1,21 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2026 Xyna GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
 import fs from "fs";
-import { spawn, spawnSync } from "child_process";
 import { ZipArchive } from "archiver";
 
 const implDir = '../impl';
@@ -13,18 +29,22 @@ const copyrightHeader = './copyrightheader.js'
 const appTitle = 'Modeller';
 const appName = 'modeller';
 
-main();
+const arg = process.argv[2];
 
-async function main() {
+if (arg == 'pre') {
+    prerelease();
+} else if (arg == 'post') {
+    postrelease();
+}
+
+function prerelease() {
 
     console.log('Cleanup');
     cleanup();
 
-    console.log('Lint');
-    npmRun('lint');
+}
 
-    console.log('Release');
-    npmRun('release');
+async function postrelease() {
 
     console.log('Replace href');
     replaceHref(appName);
@@ -42,15 +62,6 @@ async function main() {
 function cleanup() {
     fs.rmSync(buildDir, { recursive: true, force: true });
     fs.rmSync(releaseDir, { recursive: true, force: true });
-}
-
-function npmRun(command) {
-
-	spawnSync('npm', ['run', command] , {
-		cwd: implDir,
-		stdio: 'inherit',
-		shell: true
-	});
 }
 
 function replaceHref(baseurl) {

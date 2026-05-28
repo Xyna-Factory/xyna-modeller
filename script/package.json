@@ -4,7 +4,9 @@
   "description": "New Modeller Devel Tasks",
   "version": "1.0.0",
   "scripts": {
-    "release": "node release.mjs"
+    "prerelease": "node release.mjs pre",
+    "release": "cd ../impl/ && npm run lint && npm run release",
+    "postrelease": "node release.mjs post"
   },
   "devDependencies": {
       "archiver": "8.0.0"
