@@ -69,7 +69,7 @@ function cleanup() {
 function replaceHref(baseurl) {
 
     const data = fs.readFileSync(indexHtml, 'utf8')
-    const replaced = data.replace(/^(\s*<base href=").*(">\s*)$/gm, ''.concat('$1', baseurl, '$2'));
+    const replaced = data.replace(/^(\s*<base href=").*(">\s*)$/gm, ''.concat('$1/', baseurl, '/$2'));
     fs.writeFileSync(indexHtml, replaced);
 }
 
