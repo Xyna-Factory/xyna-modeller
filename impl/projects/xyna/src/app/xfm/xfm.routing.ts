@@ -20,7 +20,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FactoryManagerRoutes, FactoryManagerRoutingModules, FactoryManagerRoutingProviders } from '@fman/factory-manager.routing';
 
 import { AcmRoutes, AcmRoutingModules, AcmRoutingProviders } from './acm/acm.routing';
-import { PlaygroundRoutes, PlaygroundRoutingModules, PlaygroundRoutingProviders } from './playground/playground.routing';
 import { ProcessmodellerRoutes, ProcessmodellerRoutingModules, ProcessmodellerRoutingProviders } from './processmodeller/processmodeller.routing';
 import { ProcessmonitorRoutes, ProcessmonitorRoutingModules, ProcessmonitorRoutingProviders } from './processmonitor/processmonitor.routing';
 import { TestfactoryRoutes, TestfactoryRoutingModules, TestfactoryRoutingProviders } from './testfactory/testfactory.routing';
@@ -43,8 +42,7 @@ export const XfmRoutes: Routes = [
             ...FactoryManagerRoutes,
             ...ProcessmonitorRoutes,
             ...TestfactoryRoutes,
-            ...AcmRoutes,
-            ...PlaygroundRoutes
+            ...AcmRoutes
         ]
     }
 ];
@@ -55,8 +53,7 @@ export const XfmRoutingModules = [
     ...FactoryManagerRoutingModules,
     ...ProcessmodellerRoutingModules,
     ...ProcessmonitorRoutingModules,
-    ...TestfactoryRoutingModules,
-    ...PlaygroundRoutingModules
+    ...TestfactoryRoutingModules
 ];
 
 export const XfmRoutingProviders = [
@@ -64,6 +61,5 @@ export const XfmRoutingProviders = [
     ...FactoryManagerRoutingProviders,
     ...ProcessmodellerRoutingProviders,
     ...ProcessmonitorRoutingProviders,
-    ...TestfactoryRoutingProviders,
-    ...PlaygroundRoutingProviders
+    ...TestfactoryRoutingProviders
 ];
