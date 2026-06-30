@@ -19,27 +19,29 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { AppTitleComponent } from '@zeta/nav';
+import { XcMenuTriggerDirective } from '@zeta/xc';
+import { XcContextMenuService } from '@zeta/xc/xc-menu/xc-context-menu.service';
 
 import { XcMenuComponent } from './zeta/xc/xc-menu/xc-menu.component';
 import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
 
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [XcMenuComponent, RouterOutlet]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective],
 })
 export class AppComponent extends AppTitleComponent {
 
   protected readonly localeService = inject(LocaleService);
   protected readonly i18nService = inject(I18nService);
   protected readonly menuService = inject(XcMenuService);
+  protected readonly contextMenuService = inject(XcContextMenuService);
 
   title = 'Xyna';
 
   visible = true;
-
 
   constructor() {
     super();
@@ -57,6 +59,13 @@ export class AppComponent extends AppTitleComponent {
     this.menuService.component = value;
   }
 
+  @ViewChild('contextMenuTrigger', {
+    read: XcMenuTriggerDirective
+  })
+
+  set contextTrigger(value: XcMenuTriggerDirective) {
+    this.contextMenuService.trigger = value;
+  }
 
   // Performance Leak Detection:
   // remove comment slashes from following code to check for unnecessary detection changes
