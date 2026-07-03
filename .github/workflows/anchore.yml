@@ -87,13 +87,13 @@ jobs:
         # severity-cutoff: critical
 
     - name: Upload vulnerability report
-      uses: github/codeql-action/upload-sarif@v4
+      uses: github/codeql-action/upload-sarif@c35d1b164463ee62a100735382aaaa525c5d3496
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
         
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v4
+      uses: github/codeql-action/init@c35d1b164463ee62a100735382aaaa525c5d3496
       with:
         languages: 'javascript'
         # Add a unique identifier to the cache key
@@ -106,6 +106,6 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v4
+      uses: github/codeql-action/analyze@c35d1b164463ee62a100735382aaaa525c5d3496
       with:
         category: "/language:javascript"        
