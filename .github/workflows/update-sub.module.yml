@@ -18,7 +18,7 @@ jobs:
     steps:
     
      - name: Check out xyna-modeller
-       uses: actions/checkout@v4
+       uses: actions/checkout@1044a6dea927916f2c38ba5aeffbc0a847b1221a
        
      - name: Create new branch
        env:
