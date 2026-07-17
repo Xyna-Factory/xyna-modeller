@@ -1,0 +1,25 @@
+{
+    "production": false,
+    "zeta": {
+        "url": "location.origin/modeller-api/",
+        "xo": {
+            "runtimeContext": {
+                "application": "GuiHttp"
+            },
+            "consistencyCheck": false
+        },
+        "auth": {
+            "smartCardLogin": false,
+            "credentialsLogin": true,
+            "languages": [
+                { "label": "English", "languageKey": "en-US" },
+                { "label": "Deutsch", "languageKey": "de-DE" }
+            ]
+        }
+    },
+    "modeller": {
+        "runtimeContext": {
+            "application": "GuiHttp"
+        }
+    }
+}
