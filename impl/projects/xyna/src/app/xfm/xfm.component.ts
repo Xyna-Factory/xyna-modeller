@@ -30,10 +30,9 @@ import { AuthService } from '@zeta/auth';
 import { AuthEventService } from '@zeta/auth/auth-event.service';
 import { KeyboardEventType, KeyDistributionService } from '@zeta/base';
 import { RuntimeContextSelectionComponent } from '@zeta/nav';
-import { XcDialogService, XcMenuItem, XcMenuServiceDirective, XcNavListItem, XcNavListOrientation, XcStatusBarComponent } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcNavListItem, XcNavListOrientation, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../zeta/i18n/';
-import { XcModule } from '../zeta/xc/xc.module';
 import { RIGHT_ACM } from './acm/const';
 import { AccessControlManagementName, AccessControlManagementVersion } from './acm/version';
 import { xfm_translations_de_DE } from './locale/xfm-translations.de-DE';
@@ -49,7 +48,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 @Component({
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
+    imports: [XcButtonComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
 })
 export class XfmComponent implements OnInit {
     private readonly apiService = inject(ApiService);
