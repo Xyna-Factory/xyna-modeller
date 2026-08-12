@@ -20,20 +20,5 @@ import { RuntimeContext } from '@zeta/api/xo/xo-describer';
 
 
 export const environment: ZetaEnvironment = {
-    production: true,
-    zeta: {
-        url: location.origin + '/modeller-api/',
-        xo: {
-            runtimeContext: RuntimeContext.fromApplication('GuiHttp'),
-            consistencyCheck: false
-        },
-        auth: {
-            smartCardLogin: false,
-            credentialsLogin: true,
-            languages: [
-                { label: 'English', languageKey: 'en-US' },
-                { label: 'Deutsch', languageKey: 'de-DE' }
-            ]
-        }
-    }
+    production: true
 };
