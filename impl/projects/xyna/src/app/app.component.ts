@@ -16,6 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, ViewChild } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { RouterOutlet } from '@angular/router';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { AppTitleComponent } from '@zeta/nav';
@@ -30,7 +31,7 @@ import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective],
+  imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective, MatMenuModule],
 })
 export class AppComponent extends AppTitleComponent {
 
