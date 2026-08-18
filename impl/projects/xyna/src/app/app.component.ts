@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterOutlet } from '@angular/router';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -39,19 +39,17 @@ export class AppComponent extends AppTitleComponent {
   protected readonly i18nService = inject(I18nService);
   protected readonly menuService = inject(XcMenuService);
   protected readonly contextMenuService = inject(XcContextMenuService);
+private readonly cdr = inject(ChangeDetectorRef);
 
   title = 'Xyna';
 
-  visible = true;
 
   constructor() {
     super();
+
     this.i18nService.contextDismantlingSearch = true;
     this.localeService.languageChange.subscribe(() => {
-      this.visible = false;
-      setTimeout(() => {
-        this.visible = true;
-      }, 0);
+        this.cdr.detectChanges();
     });
   }
 
