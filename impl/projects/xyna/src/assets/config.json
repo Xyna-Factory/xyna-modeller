@@ -1,7 +1,7 @@
 {
     "production": false,
     "zeta": {
-        "url": "http://localhost:8000/modeller-api/",
+        "url": "location.origin/modeller-api/",
         "xo": {
             "runtimeContext": {
                 "application": "GuiHttp"
