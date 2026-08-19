@@ -48,6 +48,10 @@ export const xfm_translations_en_US: I18nTranslation[] = [
         value: 'Settings...'
     },
     {
+        key: 'xfm.logout',
+        value: 'Logout'
+    },
+    {
         key: 'xfm.insufficient-rights-message',
         value: 'Insufficient rights to perform the operation'
     },
