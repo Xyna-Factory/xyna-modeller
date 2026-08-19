@@ -1,4 +1,3 @@
-import { Subscription } from 'rxjs';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,6 +15,7 @@ import { Subscription } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -246,12 +246,14 @@ export class XfmComponent implements OnInit, OnDestroy {
                 disabled: true
             },
             <XcMenuItem>{
-                name: this.i18n.translate('xfm.settings'),
+                name: 'xfm.settings',
+                translate: true,
                 icon: 'settings',
                 click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
             },
             <XcMenuItem>{
                 name: this.i18n.translate('xfm.logout'),
+                translate: true,
                 icon: 'arrowleft',
                 click: () => this.authService.logout().subscribe()
             }
