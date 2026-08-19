@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,7 +18,7 @@
  */
 import { debounceTime } from 'rxjs/operators';
 
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
@@ -50,21 +51,25 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
     styleUrls: ['./xfm.component.scss'],
     imports: [XcButtonComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
 })
-export class XfmComponent implements OnInit {
+export class XfmComponent implements OnInit, OnDestroy {
     private readonly apiService = inject(ApiService);
     private readonly dialogService = inject(XcDialogService);
     private readonly authService = inject(AuthService);
     readonly authEvents = inject(AuthEventService);
     private readonly i18n = inject(I18nService);
+    private readonly localeService = inject(LocaleService);
     private readonly keyService = inject(KeyDistributionService);
     private readonly router = inject(Router);
     readonly messageBus = inject(MessageBusService);
 
+    private readonly subscriptions = new Subscription();
+    private runtimeContexts: XoRuntimeContext[] = [];
 
-    readonly navListItems: XcNavListItem[] = [];
+
+    navListItems: XcNavListItem[] = [];
     readonly navListOrientation = XcNavListOrientation.TOP;
 
-    readonly usermenuItems: XcMenuItem[] = [];
+    usermenuItems: XcMenuItem[] = [];
     readonly applicationVersions: string[];
 
     @ViewChild(XcStatusBarComponent)
@@ -73,41 +78,19 @@ export class XfmComponent implements OnInit {
     constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, xfm_translations_en_US);
+        this.updateUsermenuItems();
+        this.subscriptions.add(this.localeService.languageChange.subscribe(() => {
+            this.updateNavListItems();
+            this.updateUsermenuItems();
+        }));
 
-        const navListItems = [
-            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: ProcessModellerName, class: 'processmodeller', tooltip: this.i18n.translate('xfm.processmodeller-tooltip') },
-            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: FactoryManagerName, class: 'factorymanager', tooltip: this.i18n.translate('xfm.factorymanager-tooltip') },
-            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: ProcessMonitorName, class: 'processmonitor', tooltip: this.i18n.translate('xfm.processmonitor-tooltip') },
-            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: TestFactoryName, class: 'testfactory', tooltip: this.i18n.translate('xfm.testfactory-tooltip') },
-            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translate('xfm.acm-tooltip') }
-        ];
-
-        this.apiService.getRuntimeContexts(false).subscribe({
+        this.subscriptions.add(this.apiService.getRuntimeContexts(false).subscribe({
             next: (rtcArr: XoRuntimeContext[]) => {
-
-                const hasTestFactoryRTC = rtcArr.some(rtc => rtc.name === APPLICATION_TEST_FACTORY);
-
-                [
-                    RIGHT_PROCESS_MODELLER,
-                    RIGHT_FACTORY_MANAGER,
-                    RIGHT_PROCESS_MONITOR,
-                    RIGHT_TEST_FACTORY,
-                    RIGHT_ACM
-                ].forEach((right, idx) => {
-                    if (this.authService.hasRight(right)) {
-                        if (right === RIGHT_TEST_FACTORY) {
-                            if (hasTestFactoryRTC) {
-                                this.navListItems.push(navListItems[idx]);
-                            }
-                        } else {
-                            this.navListItems.push(navListItems[idx]);
-                        }
-                    }
-                });
-
+                this.runtimeContexts = rtcArr;
+                this.updateNavListItems();
             },
             error: error => this.dialogService.error(error)
-        });
+        }));
 
         this.applicationVersions = [
             ['Xyna Factory Server', this.authEvents.sessionInfoSubject.value?.xynaVersion ?? ''],
@@ -119,42 +102,25 @@ export class XfmComponent implements OnInit {
             [YggdrasilName, YggdrasilVersion]
         ].map(version => version.join(': '));
 
-        this.usermenuItems.push(
-            <XcMenuItem>{
-                name: this.authService.username,
-                icon: 'user',
-                disabled: true
-            },
-            <XcMenuItem>{
-                name: this.i18n.translate('xfm.settings'), icon: 'settings',
-                click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
-            },
-            <XcMenuItem>{
-                name: 'Logout',
-                icon: 'arrowleft',
-                click: () => this.authService.logout().subscribe()
-            }
-        );
-
-        RightsInterceptor.errorChange.pipe(
+        this.subscriptions.add(RightsInterceptor.errorChange.pipe(
             debounceTime(500)
         ).subscribe({
             next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), undefined, errorObject.exceptionMessage)
-        });
+        }));
 
         this.messageBus.startUpdates();
-        this.authEvents.didLogout.subscribe({
+        this.subscriptions.add(this.authEvents.didLogout.subscribe({
             next: () => {
                 // reload page on logout (triggered by user or loss of session) to cleanup cache
                 window.location.reload();
                 this.messageBus.stopUpdates();
             }
-        });
+        }));
     }
 
 
     ngOnInit() {
-        this.keyService.keyEvents
+        this.subscriptions.add(this.keyService.keyEvents
             .subscribe({
                 next: eventObject => {
                     const key = eventObject.key.toLowerCase();
@@ -216,7 +182,12 @@ export class XfmComponent implements OnInit {
                         }
                     });
                 }
-            });
+            }));
+    }
+
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
     }
 
 
@@ -240,5 +211,61 @@ export class XfmComponent implements OnInit {
 
     openWiki() {
         window.open('https://github.com/Xyna-Factory/xyna/wiki', '_blank');
+    }
+
+
+    private updateNavListItems() {
+        const navListItems = this.getAvailableNavListItems();
+        const hasTestFactoryRTC = this.runtimeContexts.some(rtc => rtc.name === APPLICATION_TEST_FACTORY);
+
+        this.navListItems = [
+            RIGHT_PROCESS_MODELLER,
+            RIGHT_FACTORY_MANAGER,
+            RIGHT_PROCESS_MONITOR,
+            RIGHT_TEST_FACTORY,
+            RIGHT_ACM
+        ].flatMap((right, idx) => {
+            if (!this.authService.hasRight(right)) {
+                return [];
+            }
+
+            if ((right === RIGHT_TEST_FACTORY) && !hasTestFactoryRTC) {
+                return [];
+            }
+
+            return [navListItems[idx]];
+        });
+    }
+
+
+    private updateUsermenuItems() {
+        this.usermenuItems = [
+            <XcMenuItem>{
+                name: this.authService.username,
+                icon: 'user',
+                disabled: true
+            },
+            <XcMenuItem>{
+                name: this.i18n.translate('xfm.settings'),
+                icon: 'settings',
+                click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
+            },
+            <XcMenuItem>{
+                name: this.i18n.translate('xfm.logout'),
+                icon: 'arrowleft',
+                click: () => this.authService.logout().subscribe()
+            }
+        ];
+    }
+
+
+    private getAvailableNavListItems(): XcNavListItem[] {
+        return [
+            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: ProcessModellerName, class: 'processmodeller', tooltip: this.i18n.translate('xfm.processmodeller-tooltip') },
+            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: FactoryManagerName, class: 'factorymanager', tooltip: this.i18n.translate('xfm.factorymanager-tooltip') },
+            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: ProcessMonitorName, class: 'processmonitor', tooltip: this.i18n.translate('xfm.processmonitor-tooltip') },
+            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: TestFactoryName, class: 'testfactory', tooltip: this.i18n.translate('xfm.testfactory-tooltip') },
+            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translate('xfm.acm-tooltip') }
+        ];
     }
 }
