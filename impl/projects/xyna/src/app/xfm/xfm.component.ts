@@ -78,13 +78,16 @@ export class XfmComponent implements OnInit, OnDestroy {
     constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, xfm_translations_en_US);
-        this.updateUsermenuItems();
-        this.subscriptions.add(this.localeService.languageChange.subscribe(() => {
-            this.updateNavListItems();
-            this.updateUsermenuItems();
-        }));
 
-        this.subscriptions.add(this.apiService.getRuntimeContexts(false).subscribe({
+        const navListItems = [
+            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: ProcessModellerName, class: 'processmodeller', tooltip: this.i18n.translateSignal('xfm.processmodeller-tooltip') },
+            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: FactoryManagerName, class: 'factorymanager', tooltip: this.i18n.translateSignal('xfm.factorymanager-tooltip') },
+            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: ProcessMonitorName, class: 'processmonitor', tooltip: this.i18n.translateSignal('xfm.processmonitor-tooltip') },
+            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: TestFactoryName, class: 'testfactory', tooltip: this.i18n.translateSignal('xfm.testfactory-tooltip') },
+            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translateSignal('xfm.acm-tooltip') }
+        ];
+
+        this.apiService.getRuntimeContexts(false).subscribe({
             next: (rtcArr: XoRuntimeContext[]) => {
                 this.runtimeContexts = rtcArr;
                 this.updateNavListItems();
@@ -102,11 +105,28 @@ export class XfmComponent implements OnInit, OnDestroy {
             [YggdrasilName, YggdrasilVersion]
         ].map(version => version.join(': '));
 
-        this.subscriptions.add(RightsInterceptor.errorChange.pipe(
+        this.usermenuItems.push(
+            <XcMenuItem>{
+                name: this.authService.username,
+                icon: 'user',
+                disabled: true
+            },
+            <XcMenuItem>{
+                name: this.i18n.translateInstant('xfm.settings'), icon: 'settings',
+                click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
+            },
+            <XcMenuItem>{
+                name: 'Logout',
+                icon: 'arrowleft',
+                click: () => this.authService.logout().subscribe()
+            }
+        );
+
+        RightsInterceptor.errorChange.pipe(
             debounceTime(500)
         ).subscribe({
-            next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), undefined, errorObject.exceptionMessage)
-        }));
+            next: errorObject => this.dialogService.error(this.i18n.translateInstant(errorObject.message), undefined, errorObject.exceptionMessage)
+        });
 
         this.messageBus.startUpdates();
         this.subscriptions.add(this.authEvents.didLogout.subscribe({
