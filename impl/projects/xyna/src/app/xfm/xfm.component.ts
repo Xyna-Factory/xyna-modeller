@@ -75,11 +75,11 @@ export class XfmComponent implements OnInit {
         this.i18n.setTranslations(LocaleService.EN_US, xfm_translations_en_US);
 
         const navListItems = [
-            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: ProcessModellerName, class: 'processmodeller', tooltip: this.i18n.translate('xfm.processmodeller-tooltip') },
-            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: FactoryManagerName, class: 'factorymanager', tooltip: this.i18n.translate('xfm.factorymanager-tooltip') },
-            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: ProcessMonitorName, class: 'processmonitor', tooltip: this.i18n.translate('xfm.processmonitor-tooltip') },
-            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: TestFactoryName, class: 'testfactory', tooltip: this.i18n.translate('xfm.testfactory-tooltip') },
-            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translate('xfm.acm-tooltip') }
+            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: ProcessModellerName, class: 'processmodeller', tooltip: this.i18n.translateSignal('xfm.processmodeller-tooltip') },
+            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: FactoryManagerName, class: 'factorymanager', tooltip: this.i18n.translateSignal('xfm.factorymanager-tooltip') },
+            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: ProcessMonitorName, class: 'processmonitor', tooltip: this.i18n.translateSignal('xfm.processmonitor-tooltip') },
+            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: TestFactoryName, class: 'testfactory', tooltip: this.i18n.translateSignal('xfm.testfactory-tooltip') },
+            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translateSignal('xfm.acm-tooltip') }
         ];
 
         this.apiService.getRuntimeContexts(false).subscribe({
@@ -126,7 +126,7 @@ export class XfmComponent implements OnInit {
                 disabled: true
             },
             <XcMenuItem>{
-                name: this.i18n.translate('xfm.settings'), icon: 'settings',
+                name: this.i18n.translateInstant('xfm.settings'), icon: 'settings',
                 click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
             },
             <XcMenuItem>{
@@ -139,7 +139,7 @@ export class XfmComponent implements OnInit {
         RightsInterceptor.errorChange.pipe(
             debounceTime(500)
         ).subscribe({
-            next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), undefined, errorObject.exceptionMessage)
+            next: errorObject => this.dialogService.error(this.i18n.translateInstant(errorObject.message), undefined, errorObject.exceptionMessage)
         });
 
         this.messageBus.startUpdates();

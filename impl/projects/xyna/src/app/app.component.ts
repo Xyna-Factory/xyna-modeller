@@ -18,7 +18,7 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterOutlet } from '@angular/router';
-import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nService } from '@zeta/i18n';
 import { AppTitleComponent } from '@zeta/nav';
 import { XcMenuTriggerDirective } from '@zeta/xc';
 import { XcContextMenuService } from '@zeta/xc/xc-menu/xc-context-menu.service';
@@ -35,24 +35,15 @@ import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
 })
 export class AppComponent extends AppTitleComponent {
 
-  protected readonly localeService = inject(LocaleService);
   protected readonly i18nService = inject(I18nService);
   protected readonly menuService = inject(XcMenuService);
   protected readonly contextMenuService = inject(XcContextMenuService);
 
   title = 'Xyna';
 
-  visible = true;
-
   constructor() {
     super();
     this.i18nService.contextDismantlingSearch = true;
-    this.localeService.languageChange.subscribe(() => {
-      this.visible = false;
-      setTimeout(() => {
-        this.visible = true;
-      }, 0);
-    });
   }
 
   @ViewChild(XcMenuComponent)
