@@ -15,9 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
@@ -50,7 +51,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
     styleUrls: ['./xfm.component.scss'],
     imports: [XcButtonComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
 })
-export class XfmComponent implements OnInit {
+export class XfmComponent implements OnInit, OnDestroy {
     private readonly apiService = inject(ApiService);
     private readonly dialogService = inject(XcDialogService);
     private readonly authService = inject(AuthService);
@@ -60,26 +61,28 @@ export class XfmComponent implements OnInit {
     private readonly router = inject(Router);
     readonly messageBus = inject(MessageBusService);
 
+    private readonly subscriptions = new Subscription();
+    private runtimeContexts: XoRuntimeContext[] = [];
+
 
     navListItems: XcNavListItem[] = [];
     readonly navListOrientation = XcNavListOrientation.TOP;
 
-    readonly usermenuItems: XcMenuItem[] = [];
+    usermenuItems: XcMenuItem[] = [];
     readonly applicationVersions: string[];
 
-    @ViewChild(XcStatusBarComponent)
-    statusBar!: XcStatusBarComponent;
+    readonly statusBar = viewChild.required(XcStatusBarComponent);
 
     constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, xfm_translations_en_US);
 
         const navListItems = [
-            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: ProcessModellerName, class: 'processmodeller', tooltip: this.i18n.translateSignal('xfm.processmodeller-tooltip') },
-            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: FactoryManagerName, class: 'factorymanager', tooltip: this.i18n.translateSignal('xfm.factorymanager-tooltip') },
-            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: ProcessMonitorName, class: 'processmonitor', tooltip: this.i18n.translateSignal('xfm.processmonitor-tooltip') },
-            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: TestFactoryName, class: 'testfactory', tooltip: this.i18n.translateSignal('xfm.testfactory-tooltip') },
-            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translateSignal('xfm.acm-tooltip') }
+            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: signal(ProcessModellerName), class: 'processmodeller', tooltip: this.i18n.translateSignal('xfm.processmodeller-tooltip') },
+            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: signal(FactoryManagerName), class: 'factorymanager', tooltip: this.i18n.translateSignal('xfm.factorymanager-tooltip') },
+            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: signal(ProcessMonitorName), class: 'processmonitor', tooltip: this.i18n.translateSignal('xfm.processmonitor-tooltip') },
+            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: signal(TestFactoryName), class: 'testfactory', tooltip: this.i18n.translateSignal('xfm.testfactory-tooltip') },
+            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: signal(AccessControlManagementName), class: 'acm', tooltip: this.i18n.translateSignal('xfm.acm-tooltip') }
         ];
 
         this.apiService.getRuntimeContexts(false).subscribe({
@@ -117,7 +120,7 @@ export class XfmComponent implements OnInit {
 
         this.usermenuItems.push(
             <XcMenuItem>{
-                name: this.authService.username,
+                name: signal(this.authService.username),
                 icon: 'user',
                 disabled: true
             },
@@ -127,7 +130,7 @@ export class XfmComponent implements OnInit {
                 click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
             },
             <XcMenuItem>{
-                name: 'Logout',
+                name: signal('Logout'),
                 icon: 'arrowleft',
                 click: () => this.authService.logout().subscribe()
             }
@@ -140,18 +143,18 @@ export class XfmComponent implements OnInit {
         });
 
         this.messageBus.startUpdates();
-        this.authEvents.didLogout.subscribe({
+        this.subscriptions.add(this.authEvents.didLogout.subscribe({
             next: () => {
                 // reload page on logout (triggered by user or loss of session) to cleanup cache
                 window.location.reload();
                 this.messageBus.stopUpdates();
             }
-        });
+        }));
     }
 
 
     ngOnInit() {
-        this.keyService.keyEvents
+        this.subscriptions.add(this.keyService.keyEvents
             .subscribe({
                 next: eventObject => {
                     const key = eventObject.key.toLowerCase();
@@ -213,7 +216,12 @@ export class XfmComponent implements OnInit {
                         }
                     });
                 }
-            });
+            }));
+    }
+
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
     }
 
 
@@ -237,5 +245,20 @@ export class XfmComponent implements OnInit {
 
     openWiki() {
         window.open('https://github.com/Xyna-Factory/xyna/wiki', '_blank');
+    }
+
+
+
+
+
+
+    private getAvailableNavListItems(): XcNavListItem[] {
+        return [
+            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: signal(ProcessModellerName), class: 'processmodeller', tooltip: this.i18n.translateSignal('xfm.processmodeller-tooltip') },
+            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: signal(FactoryManagerName), class: 'factorymanager', tooltip: this.i18n.translateSignal('xfm.factorymanager-tooltip') },
+            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: signal(ProcessMonitorName), class: 'processmonitor', tooltip: this.i18n.translateSignal('xfm.processmonitor-tooltip') },
+            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: signal(TestFactoryName), class: 'testfactory', tooltip: this.i18n.translateSignal('xfm.testfactory-tooltip') },
+            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: signal(AccessControlManagementName), class: 'acm', tooltip: this.i18n.translateSignal('xfm.acm-tooltip') }
+        ];
     }
 }

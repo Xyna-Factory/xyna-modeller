@@ -1,3 +1,5 @@
+/** @type {import('eslint').Linter.Config[]} */
+
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import strictConfig from './projects/xyna/src/app/zeta/lint/config/strict/eslint.config.js';
@@ -8,7 +10,6 @@ import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import importPlugin from 'eslint-plugin-import';
 import zetaPlugin from 'eslint-plugin-zeta';
 
-/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     files: ["**/*.{js,ts}"]

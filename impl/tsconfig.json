@@ -2,6 +2,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "ignoreDeprecations": "6.0",
+    "rootDir": "./projects/xyna/src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -27,5 +29,6 @@
   },
   "angularCompilerOptions": {
     "preserveWhitespaces": false,
+    "strictTemplates": false
   }
 }
