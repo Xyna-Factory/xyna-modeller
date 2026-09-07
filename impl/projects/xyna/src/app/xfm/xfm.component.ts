@@ -88,7 +88,7 @@ export class XfmComponent implements OnInit, OnDestroy {
             next: (rtcArr: XoRuntimeContext[]) => {
                 const hasTestFactoryRTC = rtcArr.some(rtc => rtc.name === APPLICATION_TEST_FACTORY);
 
-                this.navListItems = [
+                this.navListItems.set([
                     RIGHT_PROCESS_MODELLER,
                     RIGHT_FACTORY_MANAGER,
                     RIGHT_PROCESS_MONITOR,
@@ -101,8 +101,8 @@ export class XfmComponent implements OnInit, OnDestroy {
                     if (right === RIGHT_TEST_FACTORY && !hasTestFactoryRTC) {
                         return [];
                     }
-                    this.navListItems.update(items => [...items, navListItems[idx]]);
-                });
+                    return [navListItems[idx]];
+                }));
             },
             error: error => this.dialogService.error(error)
         });
