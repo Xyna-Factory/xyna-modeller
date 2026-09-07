@@ -62,10 +62,9 @@ export class XfmComponent implements OnInit, OnDestroy {
     readonly messageBus = inject(MessageBusService);
 
     private readonly subscriptions = new Subscription();
-    private runtimeContexts: XoRuntimeContext[] = [];
 
 
-    navListItems: XcNavListItem[] = [];
+    readonly navListItems = signal<XcNavListItem[]>([]);
     readonly navListOrientation = XcNavListOrientation.TOP;
 
     usermenuItems: XcMenuItem[] = [];
@@ -102,7 +101,7 @@ export class XfmComponent implements OnInit, OnDestroy {
                     if (right === RIGHT_TEST_FACTORY && !hasTestFactoryRTC) {
                         return [];
                     }
-                    return [navListItems[idx]];
+                    this.navListItems.update(items => [...items, navListItems[idx]]);
                 });
             },
             error: error => this.dialogService.error(error)
@@ -204,7 +203,7 @@ export class XfmComponent implements OnInit, OnDestroy {
                         }
                     }
 
-                    this.navListItems.forEach((item, index) => {
+                    this.navListItems().forEach((item, index) => {
                         if ((key === (index + 1).toString()) && eventObject.ctrl) {
                             if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
                                 eventObject.preventDefault();
@@ -252,13 +251,4 @@ export class XfmComponent implements OnInit, OnDestroy {
 
 
 
-    private getAvailableNavListItems(): XcNavListItem[] {
-        return [
-            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: signal(ProcessModellerName), class: 'processmodeller', tooltip: this.i18n.translateSignal('xfm.processmodeller-tooltip') },
-            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: signal(FactoryManagerName), class: 'factorymanager', tooltip: this.i18n.translateSignal('xfm.factorymanager-tooltip') },
-            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: signal(ProcessMonitorName), class: 'processmonitor', tooltip: this.i18n.translateSignal('xfm.processmonitor-tooltip') },
-            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: signal(TestFactoryName), class: 'testfactory', tooltip: this.i18n.translateSignal('xfm.testfactory-tooltip') },
-            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: signal(AccessControlManagementName), class: 'acm', tooltip: this.i18n.translateSignal('xfm.acm-tooltip') }
-        ];
-    }
 }

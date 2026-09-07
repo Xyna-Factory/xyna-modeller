@@ -17,7 +17,7 @@
  */
 import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor-v2';
 
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { environment } from '@environments/environment';
@@ -42,6 +42,6 @@ bootstrapApplication(AppComponent, {
         importProvidersFrom(...AppRoutingModules),
         importProvidersFrom(MonacoEditorModule.forRoot(monacoConfig)),
         ...AppRoutingProviders,
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
     ]
 }).catch(err => console.log(err));
