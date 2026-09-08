@@ -17,7 +17,7 @@
  */
 import { debounceTime } from 'rxjs/operators';
 
-import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, viewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
@@ -68,8 +68,7 @@ export class XfmComponent implements OnInit {
     readonly usermenuItems: XcMenuItem[] = [];
     readonly applicationVersions: string[];
 
-    @ViewChild(XcStatusBarComponent)
-    statusBar!: XcStatusBarComponent;
+    readonly statusBar = viewChild.required(XcStatusBarComponent);
 
     constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
