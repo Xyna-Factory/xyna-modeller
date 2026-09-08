@@ -18,7 +18,7 @@
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { Component, inject, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
@@ -49,6 +49,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 @Component({
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcButtonComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
 })
 export class XfmComponent implements OnInit, OnDestroy {
@@ -60,6 +61,7 @@ export class XfmComponent implements OnInit, OnDestroy {
     private readonly keyService = inject(KeyDistributionService);
     private readonly router = inject(Router);
     readonly messageBus = inject(MessageBusService);
+    private readonly cdr = inject(ChangeDetectorRef);
 
     private readonly subscriptions = new Subscription();
 
@@ -149,6 +151,10 @@ export class XfmComponent implements OnInit, OnDestroy {
                 this.messageBus.stopUpdates();
             }
         }));
+
+        // OnPush needs an explicit change detection trigger since currentRuntimeContext
+        // is read from a plain getter, not a signal or async pipe.
+        this.subscriptions.add(this.apiService.runtimeContextChange.subscribe(() => this.cdr.markForCheck()));
     }
 
 

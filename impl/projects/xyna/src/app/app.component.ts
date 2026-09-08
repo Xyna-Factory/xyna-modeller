@@ -15,10 +15,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterOutlet } from '@angular/router';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { AppTitleComponent } from '@zeta/nav';
 import { XcMenuTriggerDirective } from '@zeta/xc';
 import { XcContextMenuService } from '@zeta/xc/xc-menu/xc-context-menu.service';
@@ -31,26 +31,39 @@ import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective, MatMenuModule],
 })
 export class AppComponent extends AppTitleComponent {
 
+  protected readonly localeService = inject(LocaleService);
   protected readonly i18nService = inject(I18nService);
   protected readonly menuService = inject(XcMenuService);
   protected readonly contextMenuService = inject(XcContextMenuService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   title = 'Xyna';
 
   constructor() {
     super();
     this.i18nService.contextDismantlingSearch = true;
+
+    // OnPush needs an explicit change detection trigger when the locale changes,
+    // since it is not driven by an @Input(), signal or async pipe.
+    this.localeService.languageChange.subscribe(() => {
+      this.cdr.detectChanges();
+    });
   }
 
+  // TODO: Skipped for migration because:
+  //  Accessor queries cannot be migrated as they are too complex.
   @ViewChild(XcMenuComponent)
   set menu(value: XcMenuComponent) {
     this.menuService.component = value;
   }
 
+  // TODO: Skipped for migration because:
+  //  Accessor queries cannot be migrated as they are too complex.
   @ViewChild('contextMenuTrigger', {
     read: XcMenuTriggerDirective
   })
