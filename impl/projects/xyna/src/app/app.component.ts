@@ -28,7 +28,6 @@ import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
 
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
