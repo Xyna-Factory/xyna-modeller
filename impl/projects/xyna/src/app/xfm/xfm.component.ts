@@ -17,7 +17,7 @@
  */
 import { debounceTime } from 'rxjs/operators';
 
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
@@ -46,6 +46,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
     imports: [XcButtonComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
