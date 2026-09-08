@@ -5,7 +5,7 @@ import typescriptParser from '@typescript-eslint/parser';
 import stylistic from '@stylistic/eslint-plugin';
 import angularPlugin from '@angular-eslint/eslint-plugin';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import zetaPlugin from 'eslint-plugin-zeta';
 
 /** @type {import('eslint').Linter.Config[]} */
