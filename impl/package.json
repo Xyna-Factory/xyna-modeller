@@ -33,20 +33,20 @@
   "devDependencies": {
     "@angular-devkit/core": "22.1.7",
     "@angular-devkit/schematics": "22.1.7",
-    "@angular-eslint/builder": "22.3.0",
-    "@angular-eslint/eslint-plugin": "22.3.0",
-    "@angular-eslint/eslint-plugin-template": "22.3.0",
-    "@angular-eslint/schematics": "22.3.0",
-    "@angular-eslint/template-parser": "22.3.0",
+    "@angular-eslint/builder": "22.5.0",
+    "@angular-eslint/eslint-plugin": "22.5.0",
+    "@angular-eslint/eslint-plugin-template": "22.5.0",
+    "@angular-eslint/schematics": "22.5.0",
+    "@angular-eslint/template-parser": "22.5.0",
     "@angular/build": "22.1.7",
     "@angular/cli": "22.1.7",
     "@angular/compiler-cli": "22.1.5",
     "@schematics/angular": "22.1.7",
     "@stylistic/eslint-plugin": "5.10.0",
-    "@types/node": "26.4.1",
+    "@types/node": "26.5.0",
     "@types/three": "0.185.4",
-    "@typescript-eslint/eslint-plugin": "8.69.0",
-    "@typescript-eslint/parser": "8.69.0",
+    "@typescript-eslint/eslint-plugin": "8.70.0",
+    "@typescript-eslint/parser": "8.70.0",
     "browserslist": "4.28.9",
     "caniuse-lite": "1.0.30001810",
     "eslint": "10.10.0",
@@ -57,7 +57,7 @@
     "globals": "17.12.0",
     "ts-node": "10.9.2",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.69.0"
+    "typescript-eslint": "8.70.0"
   },
   "overrides": {
     "dompurify": "3.4.14"
