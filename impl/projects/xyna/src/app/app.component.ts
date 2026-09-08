@@ -32,6 +32,7 @@ import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective, MatMenuModule],
 })
 export class AppComponent extends AppTitleComponent {
@@ -43,24 +44,21 @@ export class AppComponent extends AppTitleComponent {
 
   title = 'Xyna';
 
-  visible = true;
-
   constructor() {
     super();
     this.i18nService.contextDismantlingSearch = true;
-    this.localeService.languageChange.subscribe(() => {
-      this.visible = false;
-      setTimeout(() => {
-        this.visible = true;
-      }, 0);
-    });
+
   }
 
+  // TODO: Skipped for migration because:
+  //  Accessor queries cannot be migrated as they are too complex.
   @ViewChild(XcMenuComponent)
   set menu(value: XcMenuComponent) {
     this.menuService.component = value;
   }
 
+  // TODO: Skipped for migration because:
+  //  Accessor queries cannot be migrated as they are too complex.
   @ViewChild('contextMenuTrigger', {
     read: XcMenuTriggerDirective
   })
