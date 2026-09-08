@@ -49,7 +49,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 @Component({
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
 })
 export class XfmComponent implements OnInit, OnDestroy {

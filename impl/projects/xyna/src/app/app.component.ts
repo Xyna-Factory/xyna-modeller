@@ -31,7 +31,7 @@ import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective, MatMenuModule],
 })
 export class AppComponent extends AppTitleComponent {
@@ -51,7 +51,7 @@ export class AppComponent extends AppTitleComponent {
     // OnPush needs an explicit change detection trigger when the locale changes,
     // since it is not driven by an @Input(), signal or async pipe.
     this.localeService.languageChange.subscribe(() => {
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     });
   }
 
