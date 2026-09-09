@@ -11,6 +11,10 @@
         "auth": {
             "smartCardLogin": false,
             "credentialsLogin": true,
+            "credentialsWorkflowOptions": {
+                "credentialsWorkflowLogin": false,
+                "credentialsWorkflowDomain": ""
+            },
             "languages": [
                 { "label": "English", "languageKey": "en-US" },
                 { "label": "Deutsch", "languageKey": "de-DE" }
