@@ -23,7 +23,7 @@ import { AcmRoutes, AcmRoutingModules, AcmRoutingProviders } from './acm/acm.rou
 import { ProcessmodellerRoutes, ProcessmodellerRoutingModules, ProcessmodellerRoutingProviders } from './processmodeller/processmodeller.routing';
 import { ProcessmonitorRoutes, ProcessmonitorRoutingModules, ProcessmonitorRoutingProviders } from './processmonitor/processmonitor.routing';
 import { TestfactoryRoutes, TestfactoryRoutingModules, TestfactoryRoutingProviders } from './testfactory/testfactory.routing';
-import { XfmComponent } from './xfm.component';
+
 
 
 const root = 'xfm';
@@ -36,7 +36,7 @@ export const XfmRoutes: Routes = [
     },
     {
         path: root,
-        component: XfmComponent,
+        loadComponent: () => import('./xfm.component').then(m => m.XfmComponent),
         children: [
             ...ProcessmodellerRoutes,
             ...FactoryManagerRoutes,

@@ -1,3 +1,5 @@
+import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor-v2';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,13 +20,10 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
-
 import { environment } from '@environments/environment';
 
 import { AppComponent } from './app/app.component';
 import { AppRoutingModules, AppRoutingProviders } from './app/app.routing';
-import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor-v2';
 
 
 const monacoConfig: NgxMonacoEditorConfig = {
@@ -44,6 +43,5 @@ bootstrapApplication(AppComponent, {
         importProvidersFrom(MonacoEditorModule.forRoot(monacoConfig)),
         ...AppRoutingProviders,
         provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations()
     ]
 }).catch(err => console.log(err));
