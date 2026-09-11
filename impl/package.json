@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "@angular/cdk": "22.1.6",
-    "@angular/common": "22.1.5",
-    "@angular/compiler": "22.1.5",
-    "@angular/core": "22.1.5",
-    "@angular/forms": "22.1.5",
+    "@angular/common": "22.1.6",
+    "@angular/compiler": "22.1.6",
+    "@angular/core": "22.1.6",
+    "@angular/forms": "22.1.6",
     "@angular/material": "22.1.6",
-    "@angular/platform-browser": "22.1.5",
-    "@angular/router": "22.1.5",
+    "@angular/platform-browser": "22.1.6",
+    "@angular/router": "22.1.6",
     "escape-string-regexp": "5.0.0",
     "monaco-editor": "0.56.0",
     "ngx-monaco-editor-v2": "22.0.5",
@@ -31,17 +31,17 @@
     "zone.js": "0.16.3"
   },
   "devDependencies": {
-    "@angular-devkit/core": "22.1.7",
-    "@angular-devkit/schematics": "22.1.7",
+    "@angular-devkit/core": "22.1.8",
+    "@angular-devkit/schematics": "22.1.8",
     "@angular-eslint/builder": "22.5.0",
     "@angular-eslint/eslint-plugin": "22.5.0",
     "@angular-eslint/eslint-plugin-template": "22.5.0",
     "@angular-eslint/schematics": "22.5.0",
     "@angular-eslint/template-parser": "22.5.0",
-    "@angular/build": "22.1.7",
-    "@angular/cli": "22.1.7",
-    "@angular/compiler-cli": "22.1.5",
-    "@schematics/angular": "22.1.7",
+    "@angular/build": "22.1.8",
+    "@angular/cli": "22.1.8",
+    "@angular/compiler-cli": "22.1.6",
+    "@schematics/angular": "22.1.8",
     "@stylistic/eslint-plugin": "5.10.0",
     "@types/node": "26.5.0",
     "@types/three": "0.185.4",
@@ -51,7 +51,7 @@
     "caniuse-lite": "1.0.30001810",
     "eslint": "10.10.0",
     "eslint-plugin-import-x": "4.17.1",
-    "eslint-plugin-jsdoc": "64.3.6",
+    "eslint-plugin-jsdoc": "64.3.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-zeta": "file:projects/xyna/src/app/zeta/lint/plugins/eslint-plugin-zeta",
     "globals": "17.12.0",
@@ -60,6 +60,6 @@
     "typescript-eslint": "8.70.0"
   },
   "overrides": {
-    "dompurify": "3.4.14"
+    "dompurify": "3.4.15"
   }
 }
