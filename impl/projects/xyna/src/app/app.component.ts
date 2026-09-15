@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, viewChild } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterOutlet } from '@angular/router';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -43,27 +43,30 @@ export class AppComponent extends AppTitleComponent {
 
   title = 'Xyna';
 
+  private readonly menu = viewChild(XcMenuComponent);
+
+  private readonly contextTrigger = viewChild<XcMenuTriggerDirective>('contextMenuTrigger');
+
   constructor() {
     super();
+
     this.i18nService.contextDismantlingSearch = true;
 
-  }
+    effect(() => {
+      const menu = this.menu();
 
-  // TODO: Skipped for migration because:
-  //  Accessor queries cannot be migrated as they are too complex.
-  @ViewChild(XcMenuComponent)
-  set menu(value: XcMenuComponent) {
-    this.menuService.component = value;
-  }
+      if (menu) {
+        this.menuService.component = menu;
+      }
+    });
 
-  // TODO: Skipped for migration because:
-  //  Accessor queries cannot be migrated as they are too complex.
-  @ViewChild('contextMenuTrigger', {
-    read: XcMenuTriggerDirective
-  })
+    effect(() => {
+      const trigger = this.contextTrigger();
 
-  set contextTrigger(value: XcMenuTriggerDirective) {
-    this.contextMenuService.trigger = value;
+      if (trigger) {
+        this.contextMenuService.trigger = trigger;
+      }
+    });
   }
 
   // Performance Leak Detection:
