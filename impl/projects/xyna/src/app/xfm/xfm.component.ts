@@ -17,7 +17,7 @@
  */
 import { debounceTime } from 'rxjs/operators';
 
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, Signal, viewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { RIGHT_FACTORY_MANAGER } from '@fman/const';
 import { FactoryManagerName, FactoryManagerVersion } from '@fman/version';
@@ -46,6 +46,7 @@ import { TestFactoryName, TestFactoryVersion } from './testfactory/version';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './xfm.component.html',
     styleUrls: ['./xfm.component.scss'],
     imports: [XcButtonComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, XcMenuServiceDirective, RouterOutlet]
@@ -61,25 +62,44 @@ export class XfmComponent implements OnInit {
     readonly messageBus = inject(MessageBusService);
 
 
-    readonly navListItems: XcNavListItem[] = [];
+    private readonly visibleNavigationItems = signal<{ item: XcNavListItem; tooltip: Signal<string> }[]>([]);
+    readonly navListItems = computed<XcNavListItem[]>(() => this.visibleNavigationItems().map(({ item, tooltip }) => ({
+        ...item,
+        tooltip: tooltip
+    })));
     readonly navListOrientation = XcNavListOrientation.TOP;
 
-    readonly usermenuItems: XcMenuItem[] = [];
+    readonly usermenuItems = computed<XcMenuItem[]>(() => [
+        {
+            name: signal(this.authService.username),
+            icon: 'user',
+            disabled: true
+        },
+        {
+            name: this.i18n.translateSignal('xfm.settings'),
+            icon: 'settings',
+            click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
+        },
+        {
+            name: signal('Logout'),
+            icon: 'arrowleft',
+            click: () => this.authService.logout().subscribe()
+        }
+    ]);
     readonly applicationVersions: string[];
 
-    @ViewChild(XcStatusBarComponent)
-    statusBar!: XcStatusBarComponent;
+    readonly statusBar = viewChild.required(XcStatusBarComponent);
 
     constructor() {
         this.i18n.setTranslations(LocaleService.DE_DE, xfm_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, xfm_translations_en_US);
 
-        const navListItems = [
-            { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: ProcessModellerName, class: 'processmodeller', tooltip: this.i18n.translate('xfm.processmodeller-tooltip') },
-            { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: FactoryManagerName, class: 'factorymanager', tooltip: this.i18n.translate('xfm.factorymanager-tooltip') },
-            { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: ProcessMonitorName, class: 'processmonitor', tooltip: this.i18n.translate('xfm.processmonitor-tooltip') },
-            { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: TestFactoryName, class: 'testfactory', tooltip: this.i18n.translate('xfm.testfactory-tooltip') },
-            { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: AccessControlManagementName, class: 'acm', tooltip: this.i18n.translate('xfm.acm-tooltip') }
+        const navigationItems = [
+            { item: { link: 'Process-Modeller', icon: 'processmodeller', iconStyle: 'modeller', name: signal(ProcessModellerName), class: 'processmodeller' }, tooltip: this.i18n.translateSignal('xfm.processmodeller-tooltip')},
+            { item: { link: 'Factory-Manager', icon: 'factorymanager', iconStyle: 'modeller', name: signal(FactoryManagerName), class: 'factorymanager' }, tooltip: this.i18n.translateSignal('xfm.factorymanager-tooltip')},
+            { item: { link: 'Process-Monitor', icon: 'processmonitor', iconStyle: 'modeller', name: signal(ProcessMonitorName), class: 'processmonitor' }, tooltip: this.i18n.translateSignal('xfm.processmonitor-tooltip')},
+            { item: { link: 'Test-Factory', icon: 'testfactory', iconStyle: 'modeller', name: signal(TestFactoryName), class: 'testfactory' }, tooltip: this.i18n.translateSignal('xfm.testfactory-tooltip')},
+            { item: { link: 'acm', icon: 'testfactory', iconStyle: 'modeller', name: signal(AccessControlManagementName), class: 'acm' }, tooltip: this.i18n.translateSignal('xfm.acm-tooltip')}
         ];
 
         this.apiService.getRuntimeContexts(false).subscribe({
@@ -95,12 +115,8 @@ export class XfmComponent implements OnInit {
                     RIGHT_ACM
                 ].forEach((right, idx) => {
                     if (this.authService.hasRight(right)) {
-                        if (right === RIGHT_TEST_FACTORY) {
-                            if (hasTestFactoryRTC) {
-                                this.navListItems.push(navListItems[idx]);
-                            }
-                        } else {
-                            this.navListItems.push(navListItems[idx]);
+                        if (right !== RIGHT_TEST_FACTORY || hasTestFactoryRTC) {
+                            this.visibleNavigationItems.update(items => [...items, navigationItems[idx]]);
                         }
                     }
                 });
@@ -119,27 +135,10 @@ export class XfmComponent implements OnInit {
             [YggdrasilName, YggdrasilVersion]
         ].map(version => version.join(': '));
 
-        this.usermenuItems.push(
-            <XcMenuItem>{
-                name: this.authService.username,
-                icon: 'user',
-                disabled: true
-            },
-            <XcMenuItem>{
-                name: this.i18n.translate('xfm.settings'), icon: 'settings',
-                click: () => this.dialogService.custom(ModellerSettingsDialogComponent)
-            },
-            <XcMenuItem>{
-                name: 'Logout',
-                icon: 'arrowleft',
-                click: () => this.authService.logout().subscribe()
-            }
-        );
-
         RightsInterceptor.errorChange.pipe(
             debounceTime(500)
         ).subscribe({
-            next: errorObject => this.dialogService.error(this.i18n.translate(errorObject.message), undefined, errorObject.exceptionMessage)
+            next: errorObject => this.dialogService.error(this.i18n.translateInstant(errorObject.message), undefined, errorObject.exceptionMessage)
         });
 
         this.messageBus.startUpdates();
@@ -204,7 +203,7 @@ export class XfmComponent implements OnInit {
                         }
                     }
 
-                    this.navListItems.forEach((item, index) => {
+                    this.navListItems().forEach((item, index) => {
                         if ((key === (index + 1).toString()) && eventObject.ctrl) {
                             if (eventObject.type === KeyboardEventType.KEY_TYPE_DOWN) {
                                 eventObject.preventDefault();

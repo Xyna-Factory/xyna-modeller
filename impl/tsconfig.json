@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "rootDir": "./projects/xyna/src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -17,6 +18,8 @@
     "lib": ["es2022", "dom"],
     "noImplicitAny": false,
     "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@zeta/*": ["projects/xyna/src/app/zeta/*"],
       "@pmod/*": ["projects/xyna/src/app/xfm/processmodeller/*"],
