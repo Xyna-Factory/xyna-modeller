@@ -1,5 +1,6 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+// eslint-disable-next-line zeta/xo
 import strictConfig from './projects/xyna/src/app/zeta/lint/config/strict/eslint.config.js';
 import typescriptParser from '@typescript-eslint/parser';
 import stylistic from '@stylistic/eslint-plugin';
@@ -7,12 +8,12 @@ import angularPlugin from '@angular-eslint/eslint-plugin';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import importPlugin from 'eslint-plugin-import-x';
 import zetaPlugin from 'eslint-plugin-zeta';
-import { fileURLToPath } from "url";
+import { fileURLToPath } from 'url';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
     {
-        files: ["**/*.{js,ts}"]
+        files: ['**/*.{js,ts}']
     },
     {
         languageOptions: {
@@ -23,7 +24,6 @@ export default [
                 projectService: {
                     allowDefaultProject: [
                         'eslint.config.js',
-                        'impl/eslint.config.js',
                         'projects/xyna/src/app/zeta/lint/config/base/eslint.config.js',
                         'projects/xyna/src/app/zeta/lint/config/strict/eslint.config.js',
                         'projects/xyna/src/app/zeta/lint/plugins/eslint-plugin-zeta/index.js',
@@ -43,14 +43,14 @@ export default [
             '@typescript-eslint': typescriptPlugin,
             import: importPlugin,
             zeta: zetaPlugin
-        },
+        }
     },
     ...tseslint.configs.recommended,
     {
         rules: {
+            ...strictConfig[0].rules,
             '@typescript-eslint/no-explicit-any': 'off',
-            '@typescript-eslint/no-unused-vars': 'off',
-            ...strictConfig[0].rules
+            '@typescript-eslint/no-unused-vars': 'off'
         }
     }
 ];

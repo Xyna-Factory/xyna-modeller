@@ -23,8 +23,8 @@ import { AppTitleComponent } from '@zeta/nav';
 import { XcMenuTriggerDirective } from '@zeta/xc';
 import { XcContextMenuService } from '@zeta/xc/xc-menu/xc-context-menu.service';
 
-import { XcMenuComponent } from './zeta/xc/xc-menu/xc-menu.component';
-import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
+import { XcMenuComponent } from '@zeta/xc/xc-menu/xc-menu.component';
+import { XcMenuService } from '@zeta/xc/xc-menu/xc-menu.service';
 
 
 @Component({
@@ -32,14 +32,14 @@ import { XcMenuService } from './zeta/xc/xc-menu/xc-menu.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective, MatMenuModule],
+  imports: [XcMenuComponent, RouterOutlet, XcMenuTriggerDirective, MatMenuModule]
 })
 export class AppComponent extends AppTitleComponent {
 
-  protected readonly localeService = inject(LocaleService);
-  protected readonly i18nService = inject(I18nService);
-  protected readonly menuService = inject(XcMenuService);
-  protected readonly contextMenuService = inject(XcContextMenuService);
+    protected readonly localeService = inject(LocaleService);
+    protected readonly i18nService = inject(I18nService);
+    protected readonly menuService = inject(XcMenuService);
+    protected readonly contextMenuService = inject(XcContextMenuService);
 
   title = 'Xyna';
 
@@ -48,32 +48,32 @@ export class AppComponent extends AppTitleComponent {
   private readonly contextTrigger = viewChild<XcMenuTriggerDirective>('contextMenuTrigger');
 
   constructor() {
-    super();
+      super();
 
-    this.i18nService.contextDismantlingSearch = true;
+      this.i18nService.contextDismantlingSearch = true;
 
     effect(() => {
-      const menu = this.menu();
+        const menu = this.menu();
 
-      if (menu) {
-        this.menuService.component = menu;
-      }
+        if (menu) {
+            this.menuService.component = menu;
+        }
     });
 
     effect(() => {
-      const trigger = this.contextTrigger();
+        const trigger = this.contextTrigger();
 
-      if (trigger) {
-        this.contextMenuService.trigger = trigger;
-      }
+        if (trigger) {
+            this.contextMenuService.trigger = trigger;
+        }
     });
   }
 
-  // Performance Leak Detection:
-  // remove comment slashes from following code to check for unnecessary detection changes
+    // Performance Leak Detection:
+    // remove comment slashes from following code to check for unnecessary detection changes
 
-  // tslint:disable-next-line: use-life-cycle-interface
-  // ngAfterViewChecked() {
-  //     console.count('ngAfterViewChecked@XfmComponent');
-  // }
+    // tslint:disable-next-line: use-life-cycle-interface
+    // ngAfterViewChecked() {
+    //     console.count('ngAfterViewChecked@XfmComponent');
+    // }
 }
