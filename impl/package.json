@@ -15,14 +15,14 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@angular/cdk": "22.2.1",
-    "@angular/common": "22.2.1",
-    "@angular/compiler": "22.2.1",
-    "@angular/core": "22.2.1",
-    "@angular/forms": "22.2.1",
-    "@angular/material": "22.2.1",
-    "@angular/platform-browser": "22.2.1",
-    "@angular/router": "22.2.1",
+    "@angular/cdk": "22.2.6",
+    "@angular/common": "22.2.4",
+    "@angular/compiler": "22.2.4",
+    "@angular/core": "22.2.4",
+    "@angular/forms": "22.2.4",
+    "@angular/material": "22.2.6",
+    "@angular/platform-browser": "22.2.4",
+    "@angular/router": "22.2.4",
     "escape-string-regexp": "5.0.0",
     "monaco-editor": "0.56.0",
     "ngx-monaco-editor-v2": "22.0.5",
@@ -32,23 +32,23 @@
     "zone.js": "0.16.3"
   },
   "devDependencies": {
-    "@angular-devkit/core": "22.2.1",
-    "@angular-devkit/schematics": "22.2.1",
-    "@angular-eslint/builder": "22.5.0",
-    "@angular-eslint/eslint-plugin": "22.5.0",
-    "@angular-eslint/eslint-plugin-template": "22.5.0",
-    "@angular-eslint/schematics": "22.5.0",
-    "@angular-eslint/template-parser": "22.5.0",
-    "@angular/build": "22.2.1",
-    "@angular/cli": "22.2.1",
-    "@angular/compiler-cli": "22.2.1",
+    "@angular-devkit/core": "22.2.6",
+    "@angular-devkit/schematics": "22.2.6",
+    "@angular-eslint/builder": "22.6.0",
+    "@angular-eslint/eslint-plugin": "22.6.0",
+    "@angular-eslint/eslint-plugin-template": "22.6.0",
+    "@angular-eslint/schematics": "22.6.0",
+    "@angular-eslint/template-parser": "22.6.0",
+    "@angular/build": "22.2.6",
+    "@angular/cli": "22.2.6",
+    "@angular/compiler-cli": "22.2.4",
     "@eslint/js": "^10.0.1",
-    "@schematics/angular": "22.2.1",
+    "@schematics/angular": "22.2.6",
     "@stylistic/eslint-plugin": "5.10.0",
     "@types/node": "26.6.2",
     "@types/three": "0.186.0",
-    "@typescript-eslint/eslint-plugin": "8.70.1",
-    "@typescript-eslint/parser": "8.70.1",
+    "@typescript-eslint/eslint-plugin": "8.72.1",
+    "@typescript-eslint/parser": "8.72.1",
     "browserslist": "4.29.0",
     "caniuse-lite": "1.0.30001810",
     "eslint": "10.11.0",
@@ -59,9 +59,9 @@
     "globals": "17.12.0",
     "ts-node": "10.9.2",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.70.1"
+    "typescript-eslint": "8.72.1"
   },
   "overrides": {
-    "dompurify": "3.4.15"
+    "dompurify": "3.4.17"
   }
 }
