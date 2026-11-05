@@ -32,7 +32,7 @@ import { KeyboardEventType, KeyDistributionService } from '@zeta/base';
 import { RuntimeContextSelectionComponent } from '@zeta/nav';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcNavListComponent, XcNavListItem, XcNavListOrientation, XcStatusBarComponent, XcTitleBarComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../zeta/i18n/';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n/';
 import { RIGHT_ACM } from './acm/const';
 import { AccessControlManagementName, AccessControlManagementVersion } from './acm/version';
 import { xfm_translations_de_DE } from './locale/xfm-translations.de-DE';
