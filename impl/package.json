@@ -23,6 +23,8 @@
     "@angular/material": "22.2.6",
     "@angular/platform-browser": "22.2.4",
     "@angular/router": "22.2.4",
+    "@foblex/flow": "19.4.0",
+    "elkjs": "0.12.1",
     "escape-string-regexp": "5.0.0",
     "monaco-editor": "0.56.0",
     "ngx-monaco-editor-v2": "22.0.5",
