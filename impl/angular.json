@@ -17,6 +17,9 @@
                             "projects/xyna/src/polyfills.ts"
                         ],
                         "tsConfig": "projects/xyna/tsconfig.app.json",
+                        "externalDependencies": [
+                            "elkjs"
+                        ],
                         "assets": [
                             {
                                 "glob": "favicon.ico",
