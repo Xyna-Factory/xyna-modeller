@@ -17,7 +17,7 @@
                             "projects/xyna/src/polyfills.ts"
                         ],
                         "tsConfig": "projects/xyna/tsconfig.app.json",
-                        "externalDependencies": [
+                        "allowedCommonJsDependencies": [
                             "elkjs"
                         ],
                         "assets": [
